@@ -2,12 +2,12 @@
    MHNK Map - PIN Auth Manager
    ปลดล็อกการแก้ไขแผนที่ด้วยรหัส 4 หลัก
 
-   ⚠️ ต้องใช้ชื่อ global ว่า MHNK_DC เพราะ map-module/src/map-poi.js
-      เรียก MHNK_DC.canAdd() / canEdit() / isConnected() / getDcId() /
+   ⚠️ ต้องใช้ชื่อ global ว่า VESPD_DC เพราะ map-module/src/map-poi.js
+      เรียก VESPD_DC.canAdd() / canEdit() / isConnected() / getDcId() /
       setAuthorizedIds() อยู่ — และเราไม่แก้ไฟล์ใน map-module
    ======================================== */
 
-const MHNK_DC = {
+const VESPD_DC = {
   _unlocked: false,
   _onStatusChange: null,
   _busy: false,
@@ -200,4 +200,4 @@ const MHNK_DC = {
   }
 };
 
-if (typeof window !== 'undefined') { window.MHNK_DC = MHNK_DC; }
+if (typeof window !== 'undefined') { window.VESPD_DC = VESPD_DC; }

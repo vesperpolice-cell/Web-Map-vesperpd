@@ -2,19 +2,19 @@
    MHNK Map - Always-On Labels
    ปุ่ม [ เปิด / ปิด ] ใต้ MAP LAYER — โชว์ชื่อหมุดทุกจุดค้างไว้ ไม่ต้องเอาเมาส์ไปชี้
 
-   ⚠️ ห้ามแก้ไฟล์ใน map-module — ไฟล์นี้จึงครอบ MHNK_MAP.addPoi จากข้างนอกแทน
+   ⚠️ ห้ามแก้ไฟล์ใน map-module — ไฟล์นี้จึงครอบ VESPD_MAP.addPoi จากข้างนอกแทน
 
    map-core.js ผูก tooltip ไว้ที่ event mouseover/mouseout ของ marker แต่ละตัว
    (ชี้ = bindTooltip, เอาเมาส์ออก = unbindTooltip)
    ถ้าไม่ถอด 2 event นี้ออกก่อน พอเอาเมาส์ออกจากหมุด ป้ายถาวรจะโดนลบทิ้งไปด้วย
    ======================================== */
 
-const MHNK_LABELS = {
+const VESPD_LABELS = {
   enabled: false,
   _wrapped: false,
   STORE_KEY: 'mhnk_map_labels',
 
-  /** เรียกหลัง MHNK_MAP.init() และก่อน MHNK_POI.init() */
+  /** เรียกหลัง VESPD_MAP.init() และก่อน VESPD_POI.init() */
   init() {
     this._wrapAddPoi();
     var saved = false;
@@ -34,7 +34,7 @@ const MHNK_LABELS = {
   // ───────── ภายใน ─────────
 
   _markers() {
-    return (typeof MHNK_MAP !== 'undefined' && Array.isArray(MHNK_MAP.markers)) ? MHNK_MAP.markers : [];
+    return (typeof VESPD_MAP !== 'undefined' && Array.isArray(VESPD_MAP.markers)) ? VESPD_MAP.markers : [];
   },
 
   _name(marker) {
@@ -60,8 +60,8 @@ const MHNK_LABELS = {
         className: 'mhnk-poi-tooltip mhnk-poi-label'
       });
       // ป้ายทับกันเยอะ → ชี้ที่หมุดแล้วดันป้ายของหมุดนั้นขึ้นมาอยู่บนสุด
-      marker.on('mouseover', function () { MHNK_LABELS._raise(marker, true); });
-      marker.on('mouseout', function () { MHNK_LABELS._raise(marker, false); });
+      marker.on('mouseover', function () { VESPD_LABELS._raise(marker, true); });
+      marker.on('mouseout', function () { VESPD_LABELS._raise(marker, false); });
       return;
     }
 
@@ -87,10 +87,10 @@ const MHNK_LABELS = {
 
   /** ครอบ addPoi เพื่อให้หมุดที่โหลดทีหลัง (หรือเพิ่งปักใหม่) ได้ป้ายด้วย */
   _wrapAddPoi() {
-    if (this._wrapped || typeof MHNK_MAP === 'undefined') return;
+    if (this._wrapped || typeof VESPD_MAP === 'undefined') return;
     var self = this;
-    var orig = MHNK_MAP.addPoi;
-    MHNK_MAP.addPoi = function (poi) {
+    var orig = VESPD_MAP.addPoi;
+    VESPD_MAP.addPoi = function (poi) {
       var marker = orig.call(this, poi);
       if (marker && self.enabled) self._apply(marker);
       return marker;

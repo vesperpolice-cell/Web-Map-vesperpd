@@ -15,8 +15,8 @@
 
   <!-- Map Module Styles -->
   <link rel="icon" href="data:," />
-  <link rel="stylesheet" href="/map-module/src/map-style.css?v=8" />
-  <link rel="stylesheet" href="/map-module/overlay/src/overlay-style.css?v=2" />
+  <link rel="stylesheet" href="/map-module/src/map-style.css?v=18" />
+  <link rel="stylesheet" href="/map-module/overlay/src/overlay-style.css?v=12" />
   <!-- Leaflet.draw CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
 </head>
@@ -68,8 +68,8 @@
         <div class="mhnk-style-panel">
           <div class="mhnk-panel-tag">◢ MAP LAYER</div>
           <div class="mhnk-style-btns">
-            <button class="mhnk-style-btn active" data-style="atlas" onclick="MHNK_MAP.switchStyle('atlas')">🗺 ATLAS</button>
-            <button class="mhnk-style-btn" data-style="satelite" onclick="MHNK_MAP.switchStyle('satelite')">🛰 SATELITE</button>
+            <button class="mhnk-style-btn active" data-style="atlas" onclick="VESPD_MAP.switchStyle('atlas')">🗺 ATLAS</button>
+            <button class="mhnk-style-btn" data-style="satelite" onclick="VESPD_MAP.switchStyle('satelite')">🛰 SATELITE</button>
           </div>
         </div>
       </div>
@@ -143,26 +143,26 @@
 
   <!-- Overlay Controls -->
   <div class="mhnk-overlay-panel" id="overlay-panel">
-    <div class="mhnk-overlay-title" onclick="MHNK_OVERLAY.togglePanel()">◢ ZONES</div>
+    <div class="mhnk-overlay-title" onclick="VESPD_OVERLAY.togglePanel()">◢ ZONES</div>
     <div class="mhnk-overlay-content" id="overlay-content">
       <div class="mhnk-overlay-colors">
-        <div class="mhnk-overlay-color-btn active" data-color="#ff2d55" style="--oc:#ff2d55" onclick="MHNK_OVERLAY.setColor('#ff2d55')"></div>
-        <div class="mhnk-overlay-color-btn" data-color="#2aff9b" style="--oc:#2aff9b" onclick="MHNK_OVERLAY.setColor('#2aff9b')"></div>
-        <div class="mhnk-overlay-color-btn" data-color="#dc6d0b" style="--oc:#dc6d0b" onclick="MHNK_OVERLAY.setColor('#dc6d0b')"></div>
+        <div class="mhnk-overlay-color-btn active" data-color="#ff2d55" style="--oc:#ff2d55" onclick="VESPD_OVERLAY.setColor('#ff2d55')"></div>
+        <div class="mhnk-overlay-color-btn" data-color="#2aff9b" style="--oc:#2aff9b" onclick="VESPD_OVERLAY.setColor('#2aff9b')"></div>
+        <div class="mhnk-overlay-color-btn" data-color="#dc6d0b" style="--oc:#dc6d0b" onclick="VESPD_OVERLAY.setColor('#dc6d0b')"></div>
       </div>
       <div class="mhnk-overlay-tools">
-        <div class="mhnk-overlay-tool" onclick="MHNK_OVERLAY.startDraw('polygon')" title="วาด">✏</div>
-        <div class="mhnk-overlay-tool" onclick="MHNK_OVERLAY.startEdit()" title="แก้ไข">✎</div>
-        <div class="mhnk-overlay-tool" onclick="MHNK_OVERLAY.startDelete()" title="ลบ">✕</div>
-        <div class="mhnk-overlay-tool" onclick="MHNK_OVERLAY.finishDraw()" title="เสร็จสิ้น">✓</div>
+        <div class="mhnk-overlay-tool" onclick="VESPD_OVERLAY.startDraw('polygon')" title="วาด">✏</div>
+        <div class="mhnk-overlay-tool" onclick="VESPD_OVERLAY.startEdit()" title="แก้ไข">✎</div>
+        <div class="mhnk-overlay-tool" onclick="VESPD_OVERLAY.startDelete()" title="ลบ">✕</div>
+        <div class="mhnk-overlay-tool" onclick="VESPD_OVERLAY.finishDraw()" title="เสร็จสิ้น">✓</div>
       </div>
       <div class="mhnk-overlay-btns">
-        <div class="mhnk-overlay-btn" id="overlay-btn-all" onclick="MHNK_OVERLAY.toggleAll()" style="--oc:#dc6d0b">
+        <div class="mhnk-overlay-btn" id="overlay-btn-all" onclick="VESPD_OVERLAY.toggleAll()" style="--oc:#dc6d0b">
           <div class="mhnk-overlay-dot"></div>
           <div class="mhnk-overlay-label">เปิด/ปิด ทั้งหมด</div>
         </div>
       </div>
-      <div class="mhnk-overlay-clear" onclick="MHNK_OVERLAY.clearDrawn()">CLEAR DRAWN</div>
+      <div class="mhnk-overlay-clear" onclick="VESPD_OVERLAY.clearDrawn()">CLEAR DRAWN</div>
     </div>
   </div>
 
@@ -172,14 +172,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
 
   <!-- Map Module Scripts -->
-  <script src="/map-module/src/map-categories.js?v=9"></script>
-  <script src="/map-module/src/map-core.js?v=9"></script>
-  <script src="/map-module/src/map-poi.js?v=9"></script>
-  <script src="/map-module/src/map-dc.js?v=9"></script>
+  <script src="/map-module/src/map-categories.js?v=19"></script>
+  <script src="/map-module/src/map-core.js?v=19"></script>
+  <script src="/map-module/src/map-poi.js?v=19"></script>
+  <script src="/map-module/src/map-dc.js?v=19"></script>
 
   <!-- Overlay Module -->
-  <script src="/map-module/overlay/src/overlay-data.js?v=1"></script>
-  <script src="/map-module/overlay/src/overlay-core.js?v=1"></script>
+  <script src="/map-module/overlay/src/overlay-data.js?v=11"></script>
+  <script src="/map-module/overlay/src/overlay-core.js?v=11"></script>
 
   <script>
     // ══════════ BOOT SCREEN ANIMATION ══════════
@@ -216,31 +216,31 @@
     // ══════════ INIT MAP + POI ══════════
     document.addEventListener('DOMContentLoaded', function () {
       try {
-        MHNK_MAP.init('vesperpd-map-container');
+        VESPD_MAP.init('vesperpd-map-container');
 
         // Init Overlay
-        MHNK_OVERLAY.init(MHNK_MAP.map, OVERLAY_ZONES);
+        VESPD_OVERLAY.init(VESPD_MAP.map, OVERLAY_ZONES);
       } catch (e) {
         console.error('[MHNK] Map init error:', e);
       }
 
       var startPoi = function () {
         try {
-          MHNK_POI.init();
+          VESPD_POI.init();
         } catch (e) {
           console.error('[MHNK] POI init error:', e);
           setTimeout(function () {
-            try { MHNK_POI.init(); } catch (e2) { console.error('[MHNK] POI retry error:', e2); }
+            try { VESPD_POI.init(); } catch (e2) { console.error('[MHNK] POI retry error:', e2); }
           }, 1000);
         }
       };
 
       // Initialize DC Auth
-      if (typeof MHNK_DC !== 'undefined') {
-        MHNK_DC.init(function(isConnected, dcId, dcName) {
+      if (typeof VESPD_DC !== 'undefined') {
+        VESPD_DC.init(function(isConnected, dcId, dcName) {
           // Re-load POIs to update authorized IDs and re-render
-          if (typeof MHNK_POI !== 'undefined' && MHNK_POI.pois) {
-            MHNK_POI.loadPois();
+          if (typeof VESPD_POI !== 'undefined' && VESPD_POI.pois) {
+            VESPD_POI.loadPois();
           }
         });
       }

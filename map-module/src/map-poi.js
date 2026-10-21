@@ -15,7 +15,7 @@ function escapeHtml(str) {
     .replace(/'/g, '&#39;');
 }
 
-const MHNK_POI = {
+const VESPD_POI = {
   pois: [],
   _modalVisible: false,
   _selectedCoords: null,
@@ -39,7 +39,7 @@ const MHNK_POI = {
     document.addEventListener('mhnk-map-click', (e) => {
 
       // ตรวจสอบว่าสามารถเพิ่มจุดได้ (login + มี ID ในคอลัมน์ J)
-      if (typeof MHNK_DC !== 'undefined' && !MHNK_DC.canAdd()) {
+      if (typeof VESPD_DC !== 'undefined' && !VESPD_DC.canAdd()) {
         return;
       }
 
@@ -79,15 +79,15 @@ const MHNK_POI = {
       const data = await res.json();
       if (data.success) {
         this.pois = data.data;
-        MHNK_MAP.clearPois();
-        this.pois.forEach(poi => MHNK_MAP.addPoi(poi));
+        VESPD_MAP.clearPois();
+        this.pois.forEach(poi => VESPD_MAP.addPoi(poi));
 
         // อัปเดตรายการ ID ที่มีในคอลัมน์ J สำหรับตรวจสอบสิทธิ์
-        if (typeof MHNK_DC !== 'undefined') {
+        if (typeof VESPD_DC !== 'undefined') {
           var authorizedIds = this.pois
             .map(function(poi) { return poi.dcId; })
             .filter(function(id) { return id && String(id).trim() !== ''; });
-          MHNK_DC.setAuthorizedIds(authorizedIds);
+          VESPD_DC.setAuthorizedIds(authorizedIds);
         }
 
         this._renderPoiList();
@@ -157,7 +157,7 @@ const MHNK_POI = {
         <div class="mhnk-modal-header">
           <div class="mhnk-modal-header-icon">✎</div>
           <h3>EDIT NAME <span>// แก้ไขชื่อจุด</span></h3>
-          <button class="mhnk-modal-close" onclick="MHNK_POI._hideModal()">&times;</button>
+          <button class="mhnk-modal-close" onclick="VESPD_POI._hideModal()">&times;</button>
         </div>
         <div class="mhnk-modal-content">
           <div class="mhnk-form-group">
@@ -170,8 +170,8 @@ const MHNK_POI = {
           </div>
         </div>
         <div class="mhnk-modal-footer">
-          <button class="mhnk-btn mhnk-btn-ghost" onclick="MHNK_POI._hideModal()">✕ CANCEL</button>
-          <button id="mhnk-edit-submit-btn" class="mhnk-btn mhnk-btn-primary" onclick="MHNK_POI._savePoiName()">✓ SAVE</button>
+          <button class="mhnk-btn mhnk-btn-ghost" onclick="VESPD_POI._hideModal()">✕ CANCEL</button>
+          <button id="mhnk-edit-submit-btn" class="mhnk-btn mhnk-btn-primary" onclick="VESPD_POI._savePoiName()">✓ SAVE</button>
         </div>
       </div>
     `;
@@ -250,7 +250,7 @@ const MHNK_POI = {
         <div class="mhnk-modal-header">
           <div class="mhnk-modal-header-icon">📍</div>
           <h3>ADD POI <span>// ลงจุดแจ้ง</span></h3>
-          <button class="mhnk-modal-close" onclick="MHNK_POI._hideModal()">&times;</button>
+          <button class="mhnk-modal-close" onclick="VESPD_POI._hideModal()">&times;</button>
         </div>
         <div class="mhnk-modal-content">
           <div class="mhnk-coord-box">
@@ -277,8 +277,8 @@ const MHNK_POI = {
           </div>
         </div>
         <div class="mhnk-modal-footer">
-          <button class="mhnk-btn mhnk-btn-ghost" onclick="MHNK_POI._hideModal()">✕ CANCEL</button>
-          <button id="mhnk-poi-submit-btn" class="mhnk-btn mhnk-btn-primary" onclick="MHNK_POI._submitAddForm()">✓ ADD POI</button>
+          <button class="mhnk-btn mhnk-btn-ghost" onclick="VESPD_POI._hideModal()">✕ CANCEL</button>
+          <button id="mhnk-poi-submit-btn" class="mhnk-btn mhnk-btn-primary" onclick="VESPD_POI._submitAddForm()">✓ ADD POI</button>
         </div>
       </div>
     `;
@@ -329,8 +329,8 @@ const MHNK_POI = {
     try {
       // เพิ่ม dcId ของผู้สร้างเข้าไปในข้อมูล POI
       var poiData = { name: name, category: category, description: description, x: x, y: y };
-      if (typeof MHNK_DC !== 'undefined' && MHNK_DC.isConnected()) {
-        poiData.dcId = MHNK_DC.getDcId();
+      if (typeof VESPD_DC !== 'undefined' && VESPD_DC.isConnected()) {
+        poiData.dcId = VESPD_DC.getDcId();
       }
       const success = await this.addPoi(poiData);
       if (success) this._hideModal();
@@ -381,12 +381,12 @@ const MHNK_POI = {
       const y = isFinite(Number(poi.y)) ? Number(poi.y).toFixed(1) : '0.0';
 
       // Check edit permission (login + มี ID ในคอลัมน์ J)
-      const canEdit = (typeof MHNK_DC !== 'undefined') ? MHNK_DC.canEdit() : true;
-      const editBtn = canEdit ? `<button class="mhnk-poi-item-edit" onclick="event.stopPropagation(); MHNK_POI._editPoiName('${escapeHtml(poi.id)}')" title="แก้ไขชื่อ">✎</button>` : '';
-      const delBtn = canEdit ? `<button class="mhnk-poi-item-del" onclick="event.stopPropagation(); MHNK_POI.deletePoi('${escapeHtml(poi.id)}')" title="ลบ">✕</button>` : '';
+      const canEdit = (typeof VESPD_DC !== 'undefined') ? VESPD_DC.canEdit() : true;
+      const editBtn = canEdit ? `<button class="mhnk-poi-item-edit" onclick="event.stopPropagation(); VESPD_POI._editPoiName('${escapeHtml(poi.id)}')" title="แก้ไขชื่อ">✎</button>` : '';
+      const delBtn = canEdit ? `<button class="mhnk-poi-item-del" onclick="event.stopPropagation(); VESPD_POI.deletePoi('${escapeHtml(poi.id)}')" title="ลบ">✕</button>` : '';
 
       return `
-        <div class="mhnk-poi-item" data-poi-id="${escapeHtml(poi.id)}" style="--mc:${mc}" onclick="MHNK_POI._goToPoi('${escapeHtml(poi.id)}')">
+        <div class="mhnk-poi-item" data-poi-id="${escapeHtml(poi.id)}" style="--mc:${mc}" onclick="VESPD_POI._goToPoi('${escapeHtml(poi.id)}')">
           <div class="mhnk-poi-item-dot" style="--mc:${mc}">${this._catDotHtml(cat)}</div>
           <div class="mhnk-poi-item-name" title="${name}">${name}</div>
           <span class="mhnk-poi-item-coord">X:${x} Y:${y}</span>
@@ -422,8 +422,8 @@ const MHNK_POI = {
   _goToPoi(id) {
     const p = this.pois.find(x => String(x.id) === String(id));
     if (!p) return;
-    if (MHNK_MAP && MHNK_MAP.map) {
-      MHNK_MAP.map.setView([Number(p.y), Number(p.x)], 4);
+    if (VESPD_MAP && VESPD_MAP.map) {
+      VESPD_MAP.map.setView([Number(p.y), Number(p.x)], 4);
     }
     this._selectPoi(id);
   },

@@ -11,7 +11,7 @@
 | `Challenge/game.html` | `logo.gif` → `logo.webp` | โลโก้ในเกมเป็นรูปแตก |
 
 ส่วนหน้าแผนที่หลักไม่ต้องแก้ในโมดูล — `public/map.html` ส่ง `styleExts` เป็น options
-เข้า `MHNK_MAP.init()` เอาเอง (ดูหัวข้อ [ข้อมูล POI](#ข้อมูล-poi) — `poi-routes.js`
+เข้า `VESPD_MAP.init()` เอาเอง (ดูหัวข้อ [ข้อมูล POI](#ข้อมูล-poi) — `poi-routes.js`
 แก้เหมือนกันทั้งเว็บนี้และเว็บหลัก)
 
 ## เริ่มใช้งาน
@@ -20,11 +20,11 @@
 npm install
 npm start          # หรือ npm run dev (auto-reload)
 ```
-เปิด http://localhost:3001 → redirect ไป `/MapMhnkPD`
+เปิด http://localhost:3001 → redirect ไป `/MapVesperPD`
 
 | เส้นทาง | ใช้ทำอะไร |
 |---|---|
-| `/MapMhnkPD` | หน้าแผนที่หลัก |
+| `/MapVesperPD` | หน้าแผนที่หลัก |
 | `/Challenge` | เกมทายตำแหน่ง 50 จุด |
 | `/api/poi` | GET เปิดให้ทุกคน · POST/PUT/DELETE ต้องใส่รหัสก่อน |
 | `/api/poi/categories` | หมวดหมู่ (สแกนจากไฟล์ไอคอนใน `map-module/blips/custom/`) |
@@ -60,11 +60,11 @@ poi-routes.js  →  path.join(__dirname,'..','..','data','poi-cache.json') →  
 map.html       →  /logo.webp                                            →  public/logo.webp
 ```
 
-**และ `public/src/map-pin.js` ต้องประกาศ global ชื่อ `MHNK_DC`** เพราะ `map-module/src/map-poi.js`
-เรียก `MHNK_DC.canAdd()` / `canEdit()` / `isConnected()` / `getDcId()` / `setAuthorizedIds()` อยู่
+**และ `public/src/map-pin.js` ต้องประกาศ global ชื่อ `VESPD_DC`** เพราะ `map-module/src/map-poi.js`
+เรียก `VESPD_DC.canAdd()` / `canEdit()` / `isConnected()` / `getDcId()` / `setAuthorizedIds()` อยู่
 — เปลี่ยนชื่อเมื่อไหร่แผนที่พังทันที
 
-`/MapMhnkPD` เสิร์ฟ **`public/map.html` ของเว็บนี้** (ไม่ใช่ `map-module/public/map.html`)
+`/MapVesperPD` เสิร์ฟ **`public/map.html` ของเว็บนี้** (ไม่ใช่ `map-module/public/map.html`)
 ไฟล์นี้ก๊อปมาจากของเดิมแล้วเปลี่ยนแค่ 3 จุด: ตัดบล็อกเชื่อม Discord ออก → ใส่ปุ่มรหัสแทน,
 เพิ่ม `map-pin.css`, และสลับสคริปต์ auth เป็น `map-pin.js`
 
@@ -239,7 +239,7 @@ map/
 │   ├── map.html              ← หน้าแผนที่ของเว็บนี้ (ปุ่มรหัสแทนปุ่มเชื่อมบัญชี)
 │   ├── logo.webp
 │   └── src/
-│       ├── map-pin.js        ← ประกาศ global MHNK_DC (ห้ามเปลี่ยนชื่อ)
+│       ├── map-pin.js        ← ประกาศ global VESPD_DC (ห้ามเปลี่ยนชื่อ)
 │       └── map-pin.css
 ├── data/
 │   ├── poi-cache.json        ← fallback ตอนต่อ Sheets ไม่ได้

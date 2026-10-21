@@ -15,11 +15,11 @@
 
   <!-- Map Module Styles -->
   <link rel="icon" href="data:," />
-  <link rel="stylesheet" href="/map-module/src/map-style.css?v=8" />
-  <link rel="stylesheet" href="/map-module/overlay/src/overlay-style.css?v=2" />
-  <link rel="stylesheet" href="/src/map-pin.css?v=2" />
-  <link rel="stylesheet" href="/src/map-labels.css?v=2" />
-  <link rel="stylesheet" href="/src/map-visibility.css?v=1" />
+  <link rel="stylesheet" href="/map-module/src/map-style.css?v=18" />
+  <link rel="stylesheet" href="/map-module/overlay/src/overlay-style.css?v=12" />
+  <link rel="stylesheet" href="/src/map-pin.css?v=12" />
+  <link rel="stylesheet" href="/src/map-labels.css?v=12" />
+  <link rel="stylesheet" href="/src/map-visibility.css?v=11" />
   <!-- Leaflet.draw CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
 </head>
@@ -71,11 +71,11 @@
         <div class="mhnk-style-panel">
           <div class="mhnk-panel-tag">◢ MAP LAYER</div>
           <div class="mhnk-style-btns">
-            <button class="mhnk-style-btn active" data-style="atlas" onclick="MHNK_MAP.switchStyle('atlas')">🗺 ATLAS</button>
-            <button class="mhnk-style-btn" data-style="satelite" onclick="MHNK_MAP.switchStyle('satelite')">🛰 SATELITE</button>
+            <button class="mhnk-style-btn active" data-style="atlas" onclick="VESPD_MAP.switchStyle('atlas')">🗺 ATLAS</button>
+            <button class="mhnk-style-btn" data-style="satelite" onclick="VESPD_MAP.switchStyle('satelite')">🛰 SATELITE</button>
           </div>
           <div class="mhnk-label-toggle">
-            <button type="button" class="mhnk-style-btn" id="mhnk-label-btn" onclick="MHNK_LABELS.toggle()" aria-pressed="false">◎ ชื่อหมุด : ปิด</button>
+            <button type="button" class="mhnk-style-btn" id="mhnk-label-btn" onclick="VESPD_LABELS.toggle()" aria-pressed="false">◎ ชื่อหมุด : ปิด</button>
           </div>
         </div>
       </div>
@@ -95,7 +95,7 @@
     <aside class="vesperpd-map-sidebar">
       <div class="mhnk-sidebar-header">
         <div class="mhnk-sidebar-title-row">
-          <!-- ล็อกอยู่ = โลโก้ / ใส่รหัสแล้ว = ปุ่มซ่อนจุด (MHNK_VIS สลับให้) -->
+          <!-- ล็อกอยู่ = โลโก้ / ใส่รหัสแล้ว = ปุ่มซ่อนจุด (VESPD_VIS สลับให้) -->
           <div class="mhnk-sidebar-badge" id="mhnk-sidebar-badge"><img class="sidebar-logo-img" src="/logo.webp" alt="VES-PD"></div>
           <button type="button" class="mhnk-vis-btn" id="mhnk-vis-btn" style="display:none" aria-pressed="false"></button>
           <div class="mhnk-pin-connect" id="mhnk-pin-connect">
@@ -155,26 +155,26 @@
 
   <!-- Overlay Controls -->
   <div class="mhnk-overlay-panel" id="overlay-panel">
-    <div class="mhnk-overlay-title" onclick="MHNK_OVERLAY.togglePanel()">◢ ZONES</div>
+    <div class="mhnk-overlay-title" onclick="VESPD_OVERLAY.togglePanel()">◢ ZONES</div>
     <div class="mhnk-overlay-content" id="overlay-content">
       <div class="mhnk-overlay-colors">
-        <div class="mhnk-overlay-color-btn active" data-color="#ff2d55" style="--oc:#ff2d55" onclick="MHNK_OVERLAY.setColor('#ff2d55')"></div>
-        <div class="mhnk-overlay-color-btn" data-color="#2aff9b" style="--oc:#2aff9b" onclick="MHNK_OVERLAY.setColor('#2aff9b')"></div>
-        <div class="mhnk-overlay-color-btn" data-color="#dc6d0b" style="--oc:#dc6d0b" onclick="MHNK_OVERLAY.setColor('#dc6d0b')"></div>
+        <div class="mhnk-overlay-color-btn active" data-color="#ff2d55" style="--oc:#ff2d55" onclick="VESPD_OVERLAY.setColor('#ff2d55')"></div>
+        <div class="mhnk-overlay-color-btn" data-color="#2aff9b" style="--oc:#2aff9b" onclick="VESPD_OVERLAY.setColor('#2aff9b')"></div>
+        <div class="mhnk-overlay-color-btn" data-color="#dc6d0b" style="--oc:#dc6d0b" onclick="VESPD_OVERLAY.setColor('#dc6d0b')"></div>
       </div>
       <div class="mhnk-overlay-tools">
-        <div class="mhnk-overlay-tool" onclick="MHNK_OVERLAY.startDraw('polygon')" title="วาด">✏</div>
-        <div class="mhnk-overlay-tool" onclick="MHNK_OVERLAY.startEdit()" title="แก้ไข">✎</div>
-        <div class="mhnk-overlay-tool" onclick="MHNK_OVERLAY.startDelete()" title="ลบ">✕</div>
-        <div class="mhnk-overlay-tool" onclick="MHNK_OVERLAY.finishDraw()" title="เสร็จสิ้น">✓</div>
+        <div class="mhnk-overlay-tool" onclick="VESPD_OVERLAY.startDraw('polygon')" title="วาด">✏</div>
+        <div class="mhnk-overlay-tool" onclick="VESPD_OVERLAY.startEdit()" title="แก้ไข">✎</div>
+        <div class="mhnk-overlay-tool" onclick="VESPD_OVERLAY.startDelete()" title="ลบ">✕</div>
+        <div class="mhnk-overlay-tool" onclick="VESPD_OVERLAY.finishDraw()" title="เสร็จสิ้น">✓</div>
       </div>
       <div class="mhnk-overlay-btns">
-        <div class="mhnk-overlay-btn" id="overlay-btn-all" onclick="MHNK_OVERLAY.toggleAll()" style="--oc:#dc6d0b">
+        <div class="mhnk-overlay-btn" id="overlay-btn-all" onclick="VESPD_OVERLAY.toggleAll()" style="--oc:#dc6d0b">
           <div class="mhnk-overlay-dot"></div>
           <div class="mhnk-overlay-label">เปิด/ปิด ทั้งหมด</div>
         </div>
       </div>
-      <div class="mhnk-overlay-clear" onclick="MHNK_OVERLAY.clearDrawn()">CLEAR DRAWN</div>
+      <div class="mhnk-overlay-clear" onclick="VESPD_OVERLAY.clearDrawn()">CLEAR DRAWN</div>
     </div>
   </div>
 
@@ -184,19 +184,19 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
 
   <!-- Map Module Scripts -->
-  <script src="/map-module/src/map-categories.js?v=9"></script>
-  <script src="/map-module/src/map-core.js?v=9"></script>
-  <script src="/map-module/src/map-poi.js?v=9"></script>
-  <!-- PIN auth — ประกาศ global ชื่อ MHNK_DC เพื่อให้ map-poi.js เรียกได้โดยไม่ต้องแก้ -->
-  <script src="/src/map-pin.js?v=2"></script>
-  <!-- ป้ายชื่อหมุดค้างไว้ — ครอบ MHNK_MAP จากข้างนอก ไม่แตะ map-module -->
-  <script src="/src/map-labels.js?v=2"></script>
+  <script src="/map-module/src/map-categories.js?v=19"></script>
+  <script src="/map-module/src/map-core.js?v=19"></script>
+  <script src="/map-module/src/map-poi.js?v=19"></script>
+  <!-- PIN auth — ประกาศ global ชื่อ VESPD_DC เพื่อให้ map-poi.js เรียกได้โดยไม่ต้องแก้ -->
+  <script src="/src/map-pin.js?v=12"></script>
+  <!-- ป้ายชื่อหมุดค้างไว้ — ครอบ VESPD_MAP จากข้างนอก ไม่แตะ map-module -->
+  <script src="/src/map-labels.js?v=12"></script>
   <!-- สวิตช์ซ่อนจุดทั้งแผนที่ (โหมดสอบ) — ซ่อนจริงที่ server ตัวนี้แค่ปุ่ม -->
-  <script src="/src/map-visibility.js?v=3"></script>
+  <script src="/src/map-visibility.js?v=13"></script>
 
   <!-- Overlay Module -->
-  <script src="/map-module/overlay/src/overlay-data.js?v=1"></script>
-  <script src="/map-module/overlay/src/overlay-core.js?v=1"></script>
+  <script src="/map-module/overlay/src/overlay-data.js?v=11"></script>
+  <script src="/map-module/overlay/src/overlay-core.js?v=11"></script>
 
   <script>
     // ══════════ BOOT SCREEN ANIMATION ══════════
@@ -236,41 +236,41 @@
         // tile ของเว็บนี้แปลงเป็น WebP หมดแล้ว (เล็กกว่า JPEG 71-89%)
         // ส่งเป็น options แทนการไปแก้ styleExts ใน map-module/src/map-core.js
         // — map-module ก๊อปมาจากเว็บหลัก ถ้าแก้ในนั้นแล้ววันหลังก๊อปมาทับ แผนที่จะขอ .jpg ที่ไม่มีแล้ว
-        MHNK_MAP.init('vesperpd-map-container', {
+        VESPD_MAP.init('vesperpd-map-container', {
           styleExts: { atlas: 'webp', satelite: 'webp' }
         });
 
-        // ป้ายชื่อหมุด — ต้องเรียกก่อน MHNK_POI.init() เพื่อครอบ addPoi ให้ทัน
-        MHNK_LABELS.init();
+        // ป้ายชื่อหมุด — ต้องเรียกก่อน VESPD_POI.init() เพื่อครอบ addPoi ให้ทัน
+        VESPD_LABELS.init();
 
-        // ปุ่มซ่อนจุดทั้งแผนที่ — โผล่แทนโลโก้เมื่อใส่รหัสแล้ว (MHNK_DC เรียก setUnlocked ให้)
-        MHNK_VIS.init();
+        // ปุ่มซ่อนจุดทั้งแผนที่ — โผล่แทนโลโก้เมื่อใส่รหัสแล้ว (VESPD_DC เรียก setUnlocked ให้)
+        VESPD_VIS.init();
 
         // Init Overlay
-        MHNK_OVERLAY.init(MHNK_MAP.map, OVERLAY_ZONES);
+        VESPD_OVERLAY.init(VESPD_MAP.map, OVERLAY_ZONES);
       } catch (e) {
         console.error('[MHNK] Map init error:', e);
       }
 
       var startPoi = function () {
         try {
-          MHNK_POI.init();
+          VESPD_POI.init();
         } catch (e) {
           console.error('[MHNK] POI init error:', e);
           setTimeout(function () {
-            try { MHNK_POI.init(); } catch (e2) { console.error('[MHNK] POI retry error:', e2); }
+            try { VESPD_POI.init(); } catch (e2) { console.error('[MHNK] POI retry error:', e2); }
           }, 1000);
         }
       };
 
       // Initialize PIN Auth
-      if (typeof MHNK_DC !== 'undefined') {
-        MHNK_DC.init(function(isConnected, dcId, dcName) {
+      if (typeof VESPD_DC !== 'undefined') {
+        VESPD_DC.init(function(isConnected, dcId, dcName) {
           // ล็อก/ปลดล็อก → สลับโลโก้กับปุ่มซ่อนจุด
-          MHNK_VIS.setUnlocked(isConnected);
+          VESPD_VIS.setUnlocked(isConnected);
           // Re-load POIs to update authorized IDs and re-render
-          if (typeof MHNK_POI !== 'undefined' && MHNK_POI.pois) {
-            MHNK_POI.loadPois();
+          if (typeof VESPD_POI !== 'undefined' && VESPD_POI.pois) {
+            VESPD_POI.loadPois();
           }
         });
       }

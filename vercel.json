@@ -6,7 +6,7 @@
   "redirects": [
     {
       "source": "/",
-      "destination": "/MapMhnkPD",
+      "destination": "/MapVesperPD",
       "permanent": false
     }
   ],
@@ -16,7 +16,7 @@
       "destination": "/api"
     },
     {
-      "source": "/MapMhnkPD",
+      "source": "/MapVesperPD",
       "destination": "/map.html"
     },
     {

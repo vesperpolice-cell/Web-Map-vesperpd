@@ -126,7 +126,7 @@ app.use('/map-module/overlay/src', express.static(path.join(MAP_MODULE_DIR, 'ove
 
 // ==================== PAGE ROUTES ====================
 // หน้าแผนที่ของเว็บนี้ (ปุ่มรหัส 4 หลัก) — ไม่ใช่ map-module/public/map.html
-app.get('/MapMhnkPD', (req, res) => {
+app.get('/MapVesperPD', (req, res) => {
     res.sendFile(path.join(PUBLIC_DIR, 'map.html'));
 });
 
@@ -136,7 +136,7 @@ app.get('/Challenge', (req, res) => {
 });
 
 // หน้าแรก → แผนที่ (Render healthCheckPath ชี้มาที่ / ต้องได้ 200/3xx)
-app.get('/', (req, res) => res.redirect('/MapMhnkPD'));
+app.get('/', (req, res) => res.redirect('/MapVesperPD'));
 
 // ==================== ERROR HANDLER (must be last) ====================
 app.use((err, req, res, next) => {
@@ -151,7 +151,7 @@ app.use((err, req, res, next) => {
 if (!process.env.VERCEL) {
     app.listen(config.PORT, () => {
     logger.info(`Server running at http://localhost:${config.PORT}`);
-    logger.info(`Map: /MapMhnkPD   Game: /Challenge   API: /api/poi`);
+    logger.info(`Map: /MapVesperPD   Game: /Challenge   API: /api/poi`);
     logger.info(`Sheets: ${config.MAP_SHEET_ID ? 'Google Sheets (' + config.MAP_SHEET_ID.slice(0, 8) + '…)' : 'fallback → data/poi-cache.json'}`);
     logger.info(`Credentials: ${process.env.GOOGLE_JSON_KEY ? 'GOOGLE_JSON_KEY (.env)' : 'NOT SET'}`);
     logger.info(`แก้ไขแผนที่: ${config.ADMIN_PIN ? 'ต้องใส่รหัส ' + config.ADMIN_PIN.length + ' หลัก' : '⚠️ ยังไม่ได้ตั้ง ADMIN_PIN'}`);

@@ -1,5 +1,5 @@
 /* MHNK Overlay - Core with Drawing */
-const MHNK_OVERLAY = {
+const VESPD_OVERLAY = {
   map: null,
   layers: {},
   drawnItems: null,

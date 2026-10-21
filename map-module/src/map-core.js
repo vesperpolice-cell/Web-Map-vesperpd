@@ -3,7 +3,7 @@
    ใช้ Leaflet + GTA V map tiles
    ======================================== */
 
-const MHNK_MAP = {
+const VESPD_MAP = {
   map: null,
   tileLayers: {},
   currentStyle: 'atlas',
@@ -155,8 +155,8 @@ const MHNK_MAP = {
     // คลิก → เลื่อนแผนที่ให้จุดอยู่กึ่งกลาง + ไฮไลต์รายการด้านขวา
     marker.on('click', () => {
       this.map.setView([yy, xx], this.map.getZoom());
-      if (typeof MHNK_POI !== 'undefined' && MHNK_POI._selectPoi) {
-        MHNK_POI._selectPoi(String(poi.id));
+      if (typeof VESPD_POI !== 'undefined' && VESPD_POI._selectPoi) {
+        VESPD_POI._selectPoi(String(poi.id));
       }
     });
     // ชี้ → แสดงชื่อ

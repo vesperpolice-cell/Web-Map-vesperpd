@@ -6,7 +6,7 @@
 ```
 map-module/
 ├── public/
-│   └── map.html              # หน้าแผนที่ (เข้าถึงที่ /MapMhnkPD)
+│   └── map.html              # หน้าแผนที่ (เข้าถึงที่ /MapVesperPD)
 ├── src/
 │   ├── map-core.js            # ตัวแผนที่ Leaflet + GTA V CRS
 │   ├── map-poi.js             # ระบบ POI (CRUD + UI)
@@ -24,7 +24,7 @@ map-module/
 ```
 
 ## 🚀 การใช้งาน
-เข้าถึงแผนที่ได้ที่: `https://mhnk-pd-0-1.onrender.com/MapMhnkPD`
+เข้าถึงแผนที่ได้ที่: `https://mhnk-pd-0-1.onrender.com/MapVesperPD`
 
 ## 🎯 ฟีเจอร์
 - แผนที่ GTA V (Satellite + Atlas)

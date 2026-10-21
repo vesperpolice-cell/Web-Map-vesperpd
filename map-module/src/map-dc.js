@@ -1,5 +1,5 @@
 /* MHNK Map - DC Auth Manager (Cyberpunk Style) */
-const MHNK_DC = {
+const VESPD_DC = {
     _dcId: null,
     _dcName: null,
     _dcAvatar: null,
@@ -126,4 +126,4 @@ const MHNK_DC = {
     isConnected() { return this._isConnected; }
 };
 
-if (typeof window !== 'undefined') { window.MHNK_DC = MHNK_DC; }
+if (typeof window !== 'undefined') { window.VESPD_DC = VESPD_DC; }

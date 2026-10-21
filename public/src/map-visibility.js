@@ -20,11 +20,11 @@
    ถามไม่สำเร็จ (เน็ตหลุด) = ถือว่าปิดไว้ก่อน และซ่อนแบบไม่ง้อเน็ต
 
    ⚠️ ตอนซ่อน/แสดงใช้ทางเดียวกับที่โมดูลใช้เองเสมอ (clearPois / loadPois)
-      ห้ามไปยุ่ง marker รายตัวหรือ tooltip เอง เพราะ MHNK_LABELS ครอบ
-      MHNK_MAP.addPoi กับ event mouseover/mouseout ไว้ — แตะเองแล้วป้ายชื่อหมุดเพี้ยน
+      ห้ามไปยุ่ง marker รายตัวหรือ tooltip เอง เพราะ VESPD_LABELS ครอบ
+      VESPD_MAP.addPoi กับ event mouseover/mouseout ไว้ — แตะเองแล้วป้ายชื่อหมุดเพี้ยน
    ======================================== */
 
-const MHNK_VIS = {
+const VESPD_VIS = {
   hidden: false,
   _busy: false,
 
@@ -50,7 +50,7 @@ const MHNK_VIS = {
     if (btn) btn.addEventListener('click', function () { self.toggle(); });
   },
 
-  /** MHNK_DC เรียกทุกครั้งที่สถานะรหัสเปลี่ยน */
+  /** VESPD_DC เรียกทุกครั้งที่สถานะรหัสเปลี่ยน */
   setUnlocked(on) {
     var unlocked = !!on;
     var logo = document.getElementById('mhnk-sidebar-badge');
@@ -128,7 +128,7 @@ const MHNK_VIS = {
   },
 
   _hasPois() {
-    return !!(typeof MHNK_POI !== 'undefined' && MHNK_POI.pois && MHNK_POI.pois.length);
+    return !!(typeof VESPD_POI !== 'undefined' && VESPD_POI.pois && VESPD_POI.pois.length);
   },
 
   /** ปรับหน้าเว็บให้ตรงกับสวิตช์
@@ -138,15 +138,15 @@ const MHNK_VIS = {
    *  ถ้าไปจำสถานะตั้งต้นตอนนั้นจะได้ค่าผิดแล้วสั่งโหลดซ้ำฟรี ๆ ในรอบถัดไป
    */
   _applyToPage(hidden) {
-    if (typeof MHNK_POI === 'undefined' || typeof MHNK_MAP === 'undefined') return;
+    if (typeof VESPD_POI === 'undefined' || typeof VESPD_MAP === 'undefined') return;
     var showing = this._hasPois();
 
     if (hidden && showing) {
       // ล้างแบบไม่ง้อเน็ต (เน็ตหลุดก็ยังซ่อนได้) — ใช้ทางเดียวกับที่ loadPois ใช้
-      MHNK_POI.pois = [];
-      MHNK_MAP.clearPois();
-      MHNK_POI._renderPoiList();
-      MHNK_POI._updateStats();
+      VESPD_POI.pois = [];
+      VESPD_MAP.clearPois();
+      VESPD_POI._renderPoiList();
+      VESPD_POI._updateStats();
       return;
     }
 
@@ -154,7 +154,7 @@ const MHNK_VIS = {
     if (!hidden && !showing && !this._restoring) {
       this._restoring = true;
       var self = this;
-      Promise.resolve(MHNK_POI.loadPois()).catch(function () {})
+      Promise.resolve(VESPD_POI.loadPois()).catch(function () {})
         .then(function () { self._restoring = false; });
     }
   },
@@ -187,4 +187,4 @@ const MHNK_VIS = {
   }
 };
 
-if (typeof window !== 'undefined') { window.MHNK_VIS = MHNK_VIS; }
+if (typeof window !== 'undefined') { window.VESPD_VIS = VESPD_VIS; }

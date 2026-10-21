@@ -139,5 +139,5 @@ const GAME = {
 
   restart() { this.currentRound = 0; this.totalScore = 0; this.roundPois = this._shuffle(this.allPois).slice(0, this.totalRounds); document.getElementById('game-final').style.display = 'none'; document.getElementById('game-score').textContent = '0'; this.showStartup(); },
 
-  exit() { window.location.href = '/MapMhnkPD'; }
+  exit() { window.location.href = '/MapVesperPD'; }
 };
