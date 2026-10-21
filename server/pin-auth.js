@@ -21,7 +21,7 @@ const sessions = new Map();
 
 function signingKey() {
     const pin = String(config.ADMIN_PIN || '');
-    const salt = process.env.PIN_TOKEN_SALT || 'mhnk-map-pin';
+    const salt = process.env.PIN_TOKEN_SALT || 'vesperpd-map-pin';
     return crypto.createHash('sha256').update(salt + ':' + pin, 'utf8').digest();
 }
 

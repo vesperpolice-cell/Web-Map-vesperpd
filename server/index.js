@@ -1,5 +1,5 @@
 /* ========================================
-   MHNK PD // GEO-INTEL MAP  (standalone)
+   VES-PD // GEO-INTEL MAP  (standalone)
    เว็บแผนที่แยกเดี่ยว — เสิร์ฟ map-module/ โดยไม่แก้ไฟล์ในโมดูลเลย
 
    โครงโฟลเดอร์ต้องเป็นแบบนี้เท่านั้น เพราะ map-module/server/poi-routes.js

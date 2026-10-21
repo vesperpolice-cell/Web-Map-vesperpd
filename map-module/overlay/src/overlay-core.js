@@ -1,4 +1,4 @@
-/* MHNK Overlay - Core with Drawing */
+/* VES-PD Overlay - Core with Drawing */
 const VESPD_OVERLAY = {
   map: null,
   layers: {},

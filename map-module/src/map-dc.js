@@ -1,4 +1,4 @@
-/* MHNK Map - DC Auth Manager (Cyberpunk Style) */
+/* VES-PD Map - DC Auth Manager (Cyberpunk Style) */
 const VESPD_DC = {
     _dcId: null,
     _dcName: null,

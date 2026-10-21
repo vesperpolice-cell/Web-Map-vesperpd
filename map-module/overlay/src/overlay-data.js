@@ -1,2 +1,2 @@
-/* MHNK Overlay - Zone Data */
+/* VES-PD Overlay - Zone Data */
 const OVERLAY_ZONES = [];

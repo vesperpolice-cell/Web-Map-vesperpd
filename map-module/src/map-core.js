@@ -1,5 +1,5 @@
 /* ========================================
-   MHNK Map Module - Core Map Component
+   VES-PD Map Module - Core Map Component
    ใช้ Leaflet + GTA V map tiles
    ======================================== */
 
@@ -37,7 +37,7 @@ const VESPD_MAP = {
 
     const container = document.getElementById(containerId);
     if (!container) {
-      console.error('[MHNK-MAP] Container not found:', containerId);
+      console.error('[VES-PD-MAP] Container not found:', containerId);
       return;
     }
 
@@ -73,7 +73,7 @@ const VESPD_MAP = {
     this.map.on('click', (e) => this._onMapClick(e));
 
     this._initialized = true;
-    document.dispatchEvent(new CustomEvent('mhnk-map-ready', { detail: { map: this.map } }));
+    document.dispatchEvent(new CustomEvent('vesperpd-map-ready', { detail: { map: this.map } }));
   },
 
   _createGtaCRS() {
@@ -97,7 +97,7 @@ const VESPD_MAP = {
         minZoom: 2,
         maxZoom: styleMaxZoom,
         noWrap: true,
-        attribution: 'MHNK PD Map',
+        attribution: 'VES-PD Map',
         errorTileUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGOQsvICAAEQAJ+lYp46AAAAAElFTkSuQmCC'
       });
       layer.on('tileerror', (e) => {
@@ -123,7 +123,7 @@ const VESPD_MAP = {
     const y = e.latlng.lat;
     const detail = { x, y };
 
-    document.dispatchEvent(new CustomEvent('mhnk-map-click', { detail }));
+    document.dispatchEvent(new CustomEvent('vesperpd-map-click', { detail }));
   },
 
   async loadPois() {
@@ -135,7 +135,7 @@ const VESPD_MAP = {
         data.data.forEach(poi => this.addPoi(poi));
       }
     } catch (err) {
-      console.error('[MHNK-MAP] Load POIs failed:', err);
+      console.error('[VES-PD-MAP] Load POIs failed:', err);
     }
   },
 
@@ -144,7 +144,7 @@ const VESPD_MAP = {
     const xx = Number(poi.x);
     const yy = Number(poi.y);
     if (isNaN(xx) || isNaN(yy)) {
-      console.warn('[MHNK-MAP] Invalid coords for POI:', poi);
+      console.warn('[VES-PD-MAP] Invalid coords for POI:', poi);
       return;
     }
     const icon = this._createPoiIcon(poi.category);

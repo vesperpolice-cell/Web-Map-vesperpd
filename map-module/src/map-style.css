@@ -348,7 +348,7 @@ body {
 
 /* ═══════════════ PAGE LAYOUT ═══════════════ */
 
-.mhnk-map-page {
+.vesperpd-map-page {
 
   display: flex;
 
@@ -496,7 +496,7 @@ body {
 
 /* ═══════════════ MAP AREA ═══════════════ */
 
-.mhnk-map-main {
+.vesperpd-map-main {
 
   flex: 1;
 
@@ -510,7 +510,7 @@ body {
 
 
 
-#mhnk-map-container {
+#vesperpd-map-container {
 
   width: 100%;
 
@@ -892,7 +892,7 @@ body {
 
 /* ═══════════════ STYLE PANEL / MAP CONTROLS ═══════════════ */
 
-.mhnk-map-controls {
+.vesperpd-map-controls {
 
   position: absolute;
 
@@ -1272,7 +1272,7 @@ body {
 
 /* ═══════════════ SIDEBAR ═══════════════ */
 
-.mhnk-map-sidebar {
+.vesperpd-map-sidebar {
 
   width: 384px;
 
@@ -1300,7 +1300,7 @@ body {
 
 
 
-.mhnk-map-sidebar::before {
+.vesperpd-map-sidebar::before {
 
   content: '';
 
@@ -2623,7 +2623,7 @@ body {
 
 @media (max-width: 860px) {
 
-  .mhnk-map-page {
+  .vesperpd-map-page {
 
     flex-direction: column;
 
@@ -2631,7 +2631,7 @@ body {
 
 
 
-  .mhnk-map-main {
+  .vesperpd-map-main {
 
     flex: 1 1 58vh;
 
@@ -2641,7 +2641,7 @@ body {
 
 
 
-  .mhnk-map-sidebar {
+  .vesperpd-map-sidebar {
 
     width: 100%;
 
@@ -2693,7 +2693,7 @@ body {
 
 
 
-  .mhnk-map-controls {
+  .vesperpd-map-controls {
 
     top: 64px;
 
@@ -2885,9 +2885,9 @@ body {
 
 
 
-#mhnk-map-container .leaflet-container, #mhnk-map-container .leaflet-tile-pane, #mhnk-map-container .leaflet-layer, #mhnk-map-container .leaflet-tile { background: #0a0a0a !important; }
+#vesperpd-map-container .leaflet-container, #vesperpd-map-container .leaflet-tile-pane, #vesperpd-map-container .leaflet-layer, #vesperpd-map-container .leaflet-tile { background: #0a0a0a !important; }
 
-#mhnk-map-container .leaflet-tile-loaded { opacity: 1; }
+#vesperpd-map-container .leaflet-tile-loaded { opacity: 1; }
 
 .mhnk-boot-logo { width: 200px; height: 200px; object-fit: contain; }
 .hud-logo-img { width: 50px; height: 50px; object-fit: contain; vertical-align: middle; }

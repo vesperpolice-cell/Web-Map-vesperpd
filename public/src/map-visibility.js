@@ -1,5 +1,5 @@
 /* ========================================
-   MHNK Map - สวิตช์ซ่อนจุดทั้งแผนที่ (โหมดสอบ)
+   VES-PD Map - สวิตช์ซ่อนจุดทั้งแผนที่ (โหมดสอบ)
 
    ปุ่มนั่งแทนที่โลโก้ในแถบขวา ซ้ายมือของปุ่มใส่รหัส
    ล็อกอยู่ = เห็นโลโก้ / ใส่รหัสแล้ว = โลโก้กลายเป็นปุ่มนี้
@@ -81,7 +81,7 @@ const VESPD_VIS = {
       var data = await res.json();
       if (res.ok && data.success) this.hidden = !!data.hidden;
     } catch (e) {
-      console.error('[MHNK-VIS] สลับสถานะไม่สำเร็จ:', e);
+      console.error('[VES-PD-VIS] สลับสถานะไม่สำเร็จ:', e);
     } finally {
       this._busy = false;
       this._render();
@@ -169,7 +169,7 @@ const VESPD_VIS = {
       var data = await res.json();
       this.hidden = !!(data && data.hidden);
     } catch (e) {
-      console.error('[MHNK-VIS] อ่านสถานะไม่ได้:', e);
+      console.error('[VES-PD-VIS] อ่านสถานะไม่ได้:', e);
     }
     this._render();
   },

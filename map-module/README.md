@@ -1,6 +1,6 @@
-# 🗺️ MHNK Map Module
+# 🗺️ VES-PD Map Module
 
-โมดูลแผนที่ GTA V สำหรับระบบ MHNK Police Department
+โมดูลแผนที่ GTA V สำหรับระบบ VES-PD Police Department
 
 ## 📁 โครงสร้าง
 ```

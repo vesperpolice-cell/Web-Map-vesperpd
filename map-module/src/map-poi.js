@@ -1,5 +1,5 @@
 /* ========================================
-   MHNK Map Module - POI Manager
+   VES-PD Map Module - POI Manager
    จัดการจุดแจ้ง (CRUD + UI)
    หมวดหมู่อ่านจากไฟล์ PNG ใน blips/custom/ อัตโนมัติ
    ======================================== */
@@ -36,7 +36,7 @@ const VESPD_POI = {
   },
 
   _bindEvents() {
-    document.addEventListener('mhnk-map-click', (e) => {
+    document.addEventListener('vesperpd-map-click', (e) => {
 
       // ตรวจสอบว่าสามารถเพิ่มจุดได้ (login + มี ID ในคอลัมน์ J)
       if (typeof VESPD_DC !== 'undefined' && !VESPD_DC.canAdd()) {
@@ -96,7 +96,7 @@ const VESPD_POI = {
         if (container) container.innerHTML = '<div class="mhnk-empty">⚠️ โหลดข้อมูลไม่สำเร็จ</div>';
       }
     } catch (err) {
-      console.error('[MHNK-POI] Load failed:', err);
+      console.error('[VES-PD-POI] Load failed:', err);
       if (container) container.innerHTML = '<div class="mhnk-empty">⚠️ เกิดข้อผิดพลาดในการโหลด</div>';
     }
   },
@@ -117,7 +117,7 @@ const VESPD_POI = {
         return false;
       }
     } catch (err) {
-      console.error('[MHNK-POI] Add failed:', err);
+      console.error('[VES-PD-POI] Add failed:', err);
       alert('❌ เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์');
       return false;
     }
@@ -134,7 +134,7 @@ const VESPD_POI = {
         alert('❌ ' + (data.error || 'ไม่สามารถลบจุดได้'));
       }
     } catch (err) {
-      console.error('[MHNK-POI] Delete failed:', err);
+      console.error('[VES-PD-POI] Delete failed:', err);
       alert('❌ เกิดข้อผิดพลาด');
     }
   },
@@ -215,7 +215,7 @@ const VESPD_POI = {
         alert('❌ ' + (data.error || 'ไม่สามารถแก้ไขได้'));
       }
     } catch (err) {
-      console.error('[MHNK-POI] Edit failed:', err);
+      console.error('[VES-PD-POI] Edit failed:', err);
       alert('❌ เกิดข้อผิดพลาด');
     } finally {
       this._submitting = false;
@@ -336,7 +336,7 @@ const VESPD_POI = {
       if (success) this._hideModal();
       return finish(success);
     } catch (err) {
-      console.error('[MHNK-POI] Add form error:', err);
+      console.error('[VES-PD-POI] Add form error:', err);
       return finish(false);
     }
   },

@@ -1,5 +1,5 @@
 /* ========================================
-   MHNK Map Module - POI Categories
+   VES-PD Map Module - POI Categories
    หมวดหมู่ POI อ่านจากไฟล์ PNG ใน blips/custom/ โดยอัตโนมัติ
    ======================================== */
 
@@ -42,7 +42,7 @@ async function loadCategories() {
       Object.assign(MAP_CATEGORIES, DEFAULT_CATEGORIES);
     }
   } catch (err) {
-    console.error('[MHNK-CAT] Load failed, using defaults:', err.message);
+    console.error('[VES-PD-CAT] Load failed, using defaults:', err.message);
     // fallback
     if (Object.keys(MAP_CATEGORIES).length === 0) {
       Object.assign(MAP_CATEGORIES, DEFAULT_CATEGORIES);

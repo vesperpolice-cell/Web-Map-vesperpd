@@ -1,4 +1,4 @@
-/* MHNK GEO-CHALLENGE - Game Core */
+/* VES-PD GEO-CHALLENGE - Game Core */
 const GAME = {
   map: null, allPois: [], roundPois: [], currentRound: 0, totalRounds: 50,
   totalScore: 0, currentTarget: null, playerMarker: null, targetMarker: null,

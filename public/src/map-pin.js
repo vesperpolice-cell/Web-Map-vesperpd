@@ -1,5 +1,5 @@
 /* ========================================
-   MHNK Map - PIN Auth Manager
+   VES-PD Map - PIN Auth Manager
    ปลดล็อกการแก้ไขแผนที่ด้วยรหัส 4 หลัก
 
    ⚠️ ต้องใช้ชื่อ global ว่า VESPD_DC เพราะ map-module/src/map-poi.js

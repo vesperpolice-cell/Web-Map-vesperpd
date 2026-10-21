@@ -1,5 +1,5 @@
 /* ========================================
-   MHNK Map - Always-On Labels
+   VES-PD Map - Always-On Labels
    ปุ่ม [ เปิด / ปิด ] ใต้ MAP LAYER — โชว์ชื่อหมุดทุกจุดค้างไว้ ไม่ต้องเอาเมาส์ไปชี้
 
    ⚠️ ห้ามแก้ไฟล์ใน map-module — ไฟล์นี้จึงครอบ VESPD_MAP.addPoi จากข้างนอกแทน

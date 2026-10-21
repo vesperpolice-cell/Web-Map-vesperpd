@@ -1,5 +1,5 @@
 /* ========================================
-   MHNK Map Module - POI API Routes
+   VES-PD Map Module - POI API Routes
    CRUD สำหรับจุดแจ้งบนแผนที่
    ใช้ Google Sheets API (sheet "MapPOI")
    ======================================== */

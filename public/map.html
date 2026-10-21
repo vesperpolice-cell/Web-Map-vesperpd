@@ -15,11 +15,11 @@
 
   <!-- Map Module Styles -->
   <link rel="icon" href="data:," />
-  <link rel="stylesheet" href="/map-module/src/map-style.css?v=18" />
-  <link rel="stylesheet" href="/map-module/overlay/src/overlay-style.css?v=12" />
-  <link rel="stylesheet" href="/src/map-pin.css?v=12" />
-  <link rel="stylesheet" href="/src/map-labels.css?v=12" />
-  <link rel="stylesheet" href="/src/map-visibility.css?v=11" />
+  <link rel="stylesheet" href="/map-module/src/map-style.css?v=38" />
+  <link rel="stylesheet" href="/map-module/overlay/src/overlay-style.css?v=32" />
+  <link rel="stylesheet" href="/src/map-pin.css?v=32" />
+  <link rel="stylesheet" href="/src/map-labels.css?v=32" />
+  <link rel="stylesheet" href="/src/map-visibility.css?v=31" />
   <!-- Leaflet.draw CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
 </head>
@@ -184,19 +184,19 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
 
   <!-- Map Module Scripts -->
-  <script src="/map-module/src/map-categories.js?v=19"></script>
-  <script src="/map-module/src/map-core.js?v=19"></script>
-  <script src="/map-module/src/map-poi.js?v=19"></script>
+  <script src="/map-module/src/map-categories.js?v=39"></script>
+  <script src="/map-module/src/map-core.js?v=39"></script>
+  <script src="/map-module/src/map-poi.js?v=39"></script>
   <!-- PIN auth — ประกาศ global ชื่อ VESPD_DC เพื่อให้ map-poi.js เรียกได้โดยไม่ต้องแก้ -->
-  <script src="/src/map-pin.js?v=12"></script>
+  <script src="/src/map-pin.js?v=32"></script>
   <!-- ป้ายชื่อหมุดค้างไว้ — ครอบ VESPD_MAP จากข้างนอก ไม่แตะ map-module -->
-  <script src="/src/map-labels.js?v=12"></script>
+  <script src="/src/map-labels.js?v=32"></script>
   <!-- สวิตช์ซ่อนจุดทั้งแผนที่ (โหมดสอบ) — ซ่อนจริงที่ server ตัวนี้แค่ปุ่ม -->
-  <script src="/src/map-visibility.js?v=13"></script>
+  <script src="/src/map-visibility.js?v=33"></script>
 
   <!-- Overlay Module -->
-  <script src="/map-module/overlay/src/overlay-data.js?v=11"></script>
-  <script src="/map-module/overlay/src/overlay-core.js?v=11"></script>
+  <script src="/map-module/overlay/src/overlay-data.js?v=31"></script>
+  <script src="/map-module/overlay/src/overlay-core.js?v=31"></script>
 
   <script>
     // ══════════ BOOT SCREEN ANIMATION ══════════
@@ -249,16 +249,16 @@
         // Init Overlay
         VESPD_OVERLAY.init(VESPD_MAP.map, OVERLAY_ZONES);
       } catch (e) {
-        console.error('[MHNK] Map init error:', e);
+        console.error('[VES-PD] Map init error:', e);
       }
 
       var startPoi = function () {
         try {
           VESPD_POI.init();
         } catch (e) {
-          console.error('[MHNK] POI init error:', e);
+          console.error('[VES-PD] POI init error:', e);
           setTimeout(function () {
-            try { VESPD_POI.init(); } catch (e2) { console.error('[MHNK] POI retry error:', e2); }
+            try { VESPD_POI.init(); } catch (e2) { console.error('[VES-PD] POI retry error:', e2); }
           }, 1000);
         }
       };
