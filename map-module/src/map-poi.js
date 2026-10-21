@@ -376,7 +376,7 @@ const MHNK_POI = {
     container.innerHTML = filtered.map(poi => {
       const cat = MAP_CATEGORIES[poi.category];
       const name = escapeHtml(poi.name || 'ไม่ระบุชื่อ');
-      const mc = cat?.color || '#00e5ff';
+      const mc = cat?.color || '#dc6d0b';
       const x = isFinite(Number(poi.x)) ? Number(poi.x).toFixed(1) : '0.0';
       const y = isFinite(Number(poi.y)) ? Number(poi.y).toFixed(1) : '0.0';
 

@@ -3,7 +3,7 @@ const MHNK_OVERLAY = {
   map: null,
   layers: {},
   drawnItems: null,
-  currentColor: '#00e5ff',
+  currentColor: '#dc6d0b',
   zones: [],
 
   init(map, zones) {

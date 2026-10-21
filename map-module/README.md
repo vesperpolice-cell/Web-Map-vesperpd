@@ -11,7 +11,7 @@ map-module/
 │   ├── map-core.js            # ตัวแผนที่ Leaflet + GTA V CRS
 │   ├── map-poi.js             # ระบบ POI (CRUD + UI)
 │   ├── map-categories.js      # หมวดหมู่ POI
-│   └── map-style.css          # สไตล์ธีม MHNK PD
+│   └── map-style.css          # สไตล์ธีม VES-PD
 ├── server/
 │   └── poi-routes.js          # API routes สำหรับ POI
 ├── map-styles/

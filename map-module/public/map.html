@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MHNK PD // GEO-INTEL MAP</title>
+  <title>VES-PD // GEO-INTEL MAP</title>
 
   <!-- Fonts: Orbitron (tech) + Prompt (Thai) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,29 +25,29 @@
   <div class="mhnk-boot" id="mhnk-boot">
     <div class="mhnk-boot-grid"></div>
     <div class="mhnk-boot-inner">
-      <div class="mhnk-boot-badge"><img class="mhnk-boot-logo" src="/logo.gif" alt="MHNK"></div>
-      <h1 class="mhnk-boot-title">MHNK<span>·PD</span></h1>
+      <div class="mhnk-boot-badge"><img class="mhnk-boot-logo" src="/logo.gif" alt="VES-PD"></div>
+      <h1 class="mhnk-boot-title">VES<span>·PD</span></h1>
       <div class="mhnk-boot-sub">GEO-INTELLIGENCE TERMINAL v0.1</div>
       <div class="mhnk-boot-bar"><div class="mhnk-boot-fill" id="mhnk-boot-fill"></div></div>
       <div class="mhnk-boot-status" id="mhnk-boot-status">INITIALIZING SECURE CHANNEL…</div>
     </div>
   </div>
 
-  <div class="mhnk-map-page">
+  <div class="vesperpd-map-page">
     <!-- ═══════════ HUD TOP BAR ═══════════ -->
     <header class="mhnk-hud-top">
       <div class="mhnk-hud-brand">
-        <span class="mhnk-hud-logo"><img class="hud-logo-img" src="/logo.gif" alt="MHNK"></span>
+        <span class="mhnk-hud-logo"><img class="hud-logo-img" src="/logo.gif" alt="VES-PD"></span>
         <div class="mhnk-hud-brand-text">
-          <div class="mhnk-hud-title">MHNK<span>·PD</span></div>
+          <div class="mhnk-hud-title">VES<span>·PD</span></div>
           <div class="mhnk-hud-sub">GEO-INTEL // MAP TERMINAL</div>
         </div>
       </div>
     </header>
 
     <!-- ═══════════ MAP AREA ═══════════ -->
-    <main class="mhnk-map-main">
-      <div id="mhnk-map-container"></div>
+    <main class="vesperpd-map-main">
+      <div id="vesperpd-map-container"></div>
 
       <!-- Atmosphere overlays -->
       <div class="mhnk-vignette"></div>
@@ -64,7 +64,7 @@
       </div>
 
       <!-- Style Controls -->
-      <div class="mhnk-map-controls">
+      <div class="vesperpd-map-controls">
         <div class="mhnk-style-panel">
           <div class="mhnk-panel-tag">◢ MAP LAYER</div>
           <div class="mhnk-style-btns">
@@ -86,10 +86,10 @@
     </main>
 
     <!-- ═══════════ SIDEBAR ═══════════ -->
-    <aside class="mhnk-map-sidebar">
+    <aside class="vesperpd-map-sidebar">
       <div class="mhnk-sidebar-header">
         <div class="mhnk-sidebar-title-row">
-          <div class="mhnk-sidebar-badge"><img class="sidebar-logo-img" src="/logo.gif" alt="MHNK"></div>
+          <div class="mhnk-sidebar-badge"><img class="sidebar-logo-img" src="/logo.gif" alt="VES-PD"></div>
           <div class="mhnk-dc-connect" id="mhnk-dc-connect">
             <a href="/auth/discord?state=map" class="mhnk-dc-btn" id="mhnk-dc-btn">
               <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="flex-shrink:0">
@@ -148,7 +148,7 @@
       <div class="mhnk-overlay-colors">
         <div class="mhnk-overlay-color-btn active" data-color="#ff2d55" style="--oc:#ff2d55" onclick="MHNK_OVERLAY.setColor('#ff2d55')"></div>
         <div class="mhnk-overlay-color-btn" data-color="#2aff9b" style="--oc:#2aff9b" onclick="MHNK_OVERLAY.setColor('#2aff9b')"></div>
-        <div class="mhnk-overlay-color-btn" data-color="#00e5ff" style="--oc:#00e5ff" onclick="MHNK_OVERLAY.setColor('#00e5ff')"></div>
+        <div class="mhnk-overlay-color-btn" data-color="#dc6d0b" style="--oc:#dc6d0b" onclick="MHNK_OVERLAY.setColor('#dc6d0b')"></div>
       </div>
       <div class="mhnk-overlay-tools">
         <div class="mhnk-overlay-tool" onclick="MHNK_OVERLAY.startDraw('polygon')" title="วาด">✏</div>
@@ -157,7 +157,7 @@
         <div class="mhnk-overlay-tool" onclick="MHNK_OVERLAY.finishDraw()" title="เสร็จสิ้น">✓</div>
       </div>
       <div class="mhnk-overlay-btns">
-        <div class="mhnk-overlay-btn" id="overlay-btn-all" onclick="MHNK_OVERLAY.toggleAll()" style="--oc:#00e5ff">
+        <div class="mhnk-overlay-btn" id="overlay-btn-all" onclick="MHNK_OVERLAY.toggleAll()" style="--oc:#dc6d0b">
           <div class="mhnk-overlay-dot"></div>
           <div class="mhnk-overlay-label">เปิด/ปิด ทั้งหมด</div>
         </div>
@@ -216,7 +216,7 @@
     // ══════════ INIT MAP + POI ══════════
     document.addEventListener('DOMContentLoaded', function () {
       try {
-        MHNK_MAP.init('mhnk-map-container');
+        MHNK_MAP.init('vesperpd-map-container');
 
         // Init Overlay
         MHNK_OVERLAY.init(MHNK_MAP.map, OVERLAY_ZONES);
@@ -245,7 +245,7 @@
         });
       }
 
-      document.addEventListener('mhnk-map-ready', startPoi);
+      document.addEventListener('vesperpd-map-ready', startPoi);
       setTimeout(startPoi, 500);
     });
   </script>

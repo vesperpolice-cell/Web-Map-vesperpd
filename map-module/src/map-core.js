@@ -67,7 +67,7 @@ const MHNK_MAP = {
 
     this.map = L.map(container, mapOptions);
     setTimeout(() => this.map.invalidateSize(), 100);
-    this.map.getContainer().style.background = '#07101d';
+    this.map.getContainer().style.background = '#0a0a0a';
     L.control.zoom({ position: 'bottomright' }).addTo(this.map);
     this.poiLayer = L.layerGroup().addTo(this.map);
     this.map.on('click', (e) => this._onMapClick(e));
@@ -187,7 +187,7 @@ const MHNK_MAP = {
 
     // หาชื่อไฟล์ + สีจาก MAP_CATEGORIES
     let fileName = '2mark.png'; // fallback: ใช้ไฟล์ที่มีใน blips/custom/ จริง (ไม่มี 1mark/custom.png)
-    let color = '#00e5ff';
+    let color = '#dc6d0b';
     try {
       const cat = MAP_CATEGORIES[category];
       if (cat && cat.file) fileName = cat.file;

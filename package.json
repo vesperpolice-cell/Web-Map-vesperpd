@@ -1,7 +1,7 @@
 {
-  "name": "mhnk-map",
+  "name": "vesperpd-map",
   "version": "1.0.0",
-  "description": "MHNK PD // GEO-INTEL MAP - standalone map site (map-module extracted)",
+  "description": "VES-PD // GEO-INTEL MAP - standalone map site (map-module extracted)",
   "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js",
@@ -13,7 +13,7 @@
     "gtav",
     "map",
     "leaflet",
-    "mhnk"
+    "vesperpd"
   ],
   "license": "MIT",
   "dependencies": {

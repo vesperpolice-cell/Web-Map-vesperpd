@@ -19,16 +19,16 @@
   gap: 8px;
   width: 100%;
   padding: 10px 16px;
-  background: linear-gradient(135deg, rgba(0, 229, 255, 0.18), rgba(61, 123, 255, 0.22));
-  border: 1px solid var(--line-2, rgba(0, 229, 255, 0.4));
+  background: linear-gradient(135deg, rgba(220, 109, 11, 0.18), rgba(61, 123, 255, 0.22));
+  border: 1px solid var(--line-2, rgba(220, 109, 11, 0.4));
   border-radius: 8px;
-  color: var(--text, #eaf4ff);
+  color: var(--text, #f5f5f5);
   font-family: var(--font-ui, 'Prompt', sans-serif);
   font-size: 12px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 4px 15px rgba(0, 229, 255, 0.12);
+  box-shadow: 0 4px 15px rgba(220, 109, 11, 0.12);
   position: relative;
   overflow: hidden;
 }
@@ -45,9 +45,9 @@
 .mhnk-pin-btn:hover::before { left: 100%; }
 
 .mhnk-pin-btn:hover {
-  background: linear-gradient(135deg, rgba(0, 229, 255, 0.3), rgba(61, 123, 255, 0.34));
+  background: linear-gradient(135deg, rgba(220, 109, 11, 0.3), rgba(61, 123, 255, 0.34));
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(0, 229, 255, 0.28);
+  box-shadow: 0 6px 20px rgba(220, 109, 11, 0.28);
 }
 
 /* ── สถานะปลดล็อกแล้ว ── */
@@ -92,7 +92,7 @@
 .mhnk-pin-sub {
   font-family: var(--font-tec, 'Orbitron', monospace);
   font-size: 9px;
-  color: var(--muted, #7d8fb3);
+  color: var(--muted, #a3a3a3);
   letter-spacing: 0.5px;
 }
 
@@ -125,7 +125,7 @@
   align-items: center;
   justify-content: center;
   padding: 16px;
-  background: rgba(2, 4, 10, 0.78);
+  background: rgba(5, 5, 5, 0.78);
   backdrop-filter: blur(6px);
 }
 
@@ -134,10 +134,10 @@
 .mhnk-pin-modal {
   width: 100%;
   max-width: 340px;
-  background: var(--panel-solid, #0a1222);
-  border: 1px solid var(--line-2, rgba(0, 229, 255, 0.4));
+  background: var(--panel-solid, #141414);
+  border: 1px solid var(--line-2, rgba(220, 109, 11, 0.4));
   border-radius: 12px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 229, 255, 0.08);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(220, 109, 11, 0.08);
   overflow: hidden;
   animation: pinPop 0.18s ease;
 }
@@ -162,8 +162,8 @@
   align-items: center;
   gap: 10px;
   padding: 14px 16px;
-  border-bottom: 1px solid var(--line, rgba(0, 229, 255, 0.14));
-  background: linear-gradient(90deg, rgba(0, 229, 255, 0.08), transparent);
+  border-bottom: 1px solid var(--line, rgba(220, 109, 11, 0.14));
+  background: linear-gradient(90deg, rgba(220, 109, 11, 0.08), transparent);
 }
 
 .mhnk-pin-modal-ico { font-size: 16px; }
@@ -175,7 +175,7 @@
   font-size: 13px;
   font-weight: 800;
   letter-spacing: 1px;
-  color: var(--cyan, #00e5ff);
+  color: var(--cyan, #dc6d0b);
 }
 
 .mhnk-pin-modal-head h3 span {
@@ -183,13 +183,13 @@
   font-size: 10px;
   font-weight: 400;
   letter-spacing: 0;
-  color: var(--muted, #7d8fb3);
+  color: var(--muted, #a3a3a3);
 }
 
 .mhnk-pin-close {
   background: none;
   border: none;
-  color: var(--muted, #7d8fb3);
+  color: var(--muted, #a3a3a3);
   font-size: 22px;
   line-height: 1;
   cursor: pointer;
@@ -211,9 +211,9 @@
   font-family: var(--font-tec, "Orbitron", monospace);
   font-size: 30px;
   font-weight: 700;
-  color: var(--cyan, #00e5ff);
-  background: rgba(0, 229, 255, 0.05);
-  border: 1px solid var(--line, rgba(0, 229, 255, 0.14));
+  color: var(--cyan, #dc6d0b);
+  background: rgba(220, 109, 11, 0.05);
+  border: 1px solid var(--line, rgba(220, 109, 11, 0.14));
   border-radius: 10px;
   outline: none;
   transition: all 0.15s ease;
@@ -224,9 +224,9 @@
 }
 
 .mhnk-pin-code:focus {
-  border-color: var(--cyan, #00e5ff);
-  background: rgba(0, 229, 255, 0.12);
-  box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.15);
+  border-color: var(--cyan, #dc6d0b);
+  background: rgba(220, 109, 11, 0.12);
+  box-shadow: 0 0 0 3px rgba(220, 109, 11, 0.15);
 }
 
 .mhnk-pin-msg {
@@ -248,10 +248,10 @@
 .mhnk-pin-cta {
   width: 100%;
   padding: 11px;
-  background: linear-gradient(135deg, rgba(0, 229, 255, 0.22), rgba(61, 123, 255, 0.26));
-  border: 1px solid var(--line-2, rgba(0, 229, 255, 0.4));
+  background: linear-gradient(135deg, rgba(220, 109, 11, 0.22), rgba(61, 123, 255, 0.26));
+  border: 1px solid var(--line-2, rgba(220, 109, 11, 0.4));
   border-radius: 8px;
-  color: var(--text, #eaf4ff);
+  color: var(--text, #f5f5f5);
   font-family: var(--font-ui, 'Prompt', sans-serif);
   font-size: 12px;
   font-weight: 700;
@@ -260,8 +260,8 @@
 }
 
 .mhnk-pin-cta:hover {
-  background: linear-gradient(135deg, rgba(0, 229, 255, 0.34), rgba(61, 123, 255, 0.4));
-  box-shadow: 0 6px 20px rgba(0, 229, 255, 0.25);
+  background: linear-gradient(135deg, rgba(220, 109, 11, 0.34), rgba(61, 123, 255, 0.4));
+  box-shadow: 0 6px 20px rgba(220, 109, 11, 0.25);
 }
 
 @media (max-width: 420px) {

@@ -1,11 +1,11 @@
 # ========================================
 # Render Blueprint Configuration
-# MHNK MAP (standalone)
+# VES-PD MAP (standalone)
 # ========================================
 
 services:
   - type: web
-    name: mhnk-map
+    name: vesperpd-map
     env: node
     region: singapore
     branch: main

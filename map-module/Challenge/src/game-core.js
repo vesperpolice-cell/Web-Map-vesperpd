@@ -29,7 +29,7 @@ const GAME = {
       transformation: new L.Transformation(0.02072, 117.3, -0.0205, 172.8), infinite: true
     });
     this.map = L.map('game-map', { crs: CRS, minZoom: 2, maxZoom: 5, zoom: 4, center: [0, 0], zoomControl: false, maxBounds: L.latLngBounds(L.latLng(-6000, -8000), L.latLng(12000, 10000)), maxBoundsViscosity: 0.8 });
-    this.map.getContainer().style.background = '#07101d';
+    this.map.getContainer().style.background = '#0a0a0a';
     L.control.zoom({ position: 'bottomright' }).addTo(this.map);
     this.tileLayer = L.tileLayer('/map-module/map-styles/styleAtlas/{z}/{x}/{y}.webp', { minZoom: 0, maxZoom: 5, noWrap: true, errorTileUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGOQsvICAAEQAJ+lYp46AAAAAElFTkSuQmCC' }).addTo(this.map);
     this.map.on('click', (e) => this._onMapClick(e));
@@ -91,7 +91,7 @@ const GAME = {
     var bar = document.getElementById('game-timer-fill');
     if (bar) {
       bar.style.width = Math.max(0, Math.min(1, this.timeLeft / 30)) * 100 + '%';
-      bar.style.background = this.timeLeft <= 5 ? '#ff2d55' : (this.timeLeft <= 10 ? '#ffb020' : '#00e5ff');
+      bar.style.background = this.timeLeft <= 5 ? '#ff2d55' : (this.timeLeft <= 10 ? '#ffb020' : '#dc6d0b');
     }
   },
 
@@ -130,7 +130,7 @@ const GAME = {
     if (pct >= 90) g = 'S'; else if (pct >= 75) g = 'A'; else if (pct >= 60) g = 'B'; else if (pct >= 40) g = 'C'; else if (pct >= 20) g = 'D';
     document.getElementById('game-final-score').textContent = this.totalScore;
     var gEl = document.getElementById('game-final-grade'); gEl.textContent = g;
-    gEl.style.color = { S: '#2aff9b', A: '#00e5ff', B: '#ffb020', C: '#ff9500', D: '#ff6600', F: '#ff2d55' }[g] || '#ff2d55';
+    gEl.style.color = { S: '#2aff9b', A: '#dc6d0b', B: '#ffb020', C: '#ff9500', D: '#ff6600', F: '#ff2d55' }[g] || '#ff2d55';
     document.getElementById('game-final-details').innerHTML = 'Accuracy: ' + pct.toFixed(1) + '%<br>Max: ' + max;
     document.getElementById('game-final').style.display = 'flex';
   },

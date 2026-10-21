@@ -36,8 +36,8 @@
 .mhnk-poi-label-top {
   z-index: 10000 !important;
   opacity: 1 !important;
-  background: rgba(4, 9, 19, 0.99) !important;
-  border-color: rgba(0, 229, 255, 0.95) !important;
-  box-shadow: 0 0 14px rgba(0, 229, 255, 0.55) !important;
+  background: rgba(8, 8, 8, 0.99) !important;
+  border-color: rgba(220, 109, 11, 0.95) !important;
+  box-shadow: 0 0 14px rgba(220, 109, 11, 0.55) !important;
   /* หมายเหตุ: ห้ามใส่ transform ที่นี่ — Leaflet ใช้ inline transform จัดตำแหน่ง tooltip */
 }
