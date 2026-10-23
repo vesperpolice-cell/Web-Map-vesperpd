@@ -7,7 +7,7 @@ const MAP_CATEGORIES = {};
 
 // หมวดหมู่ start (ถ้ายังไม่มีไฟล์ PNG)
 const DEFAULT_CATEGORIES = {
-  custom: { id: 'custom', label: '📌 อื่นๆ', color: '#888888', description: 'จุดอื่นๆ' }
+  custom: { id: 'custom', label: 'อื่นๆ', color: '#888888', description: 'จุดอื่นๆ' }
 };
 
 /**
@@ -26,7 +26,7 @@ async function loadCategories() {
       data.data.forEach(cat => {
         MAP_CATEGORIES[cat.id] = {
           id: cat.id,
-          label: cat.label || `📌 ${cat.id}`,
+          label: cat.label || cat.id,
           color: getCategoryColor(cat.id),
           description: cat.description || '',
           file: cat.file || ''

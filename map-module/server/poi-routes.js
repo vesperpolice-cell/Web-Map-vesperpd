@@ -64,7 +64,7 @@ function scanCustomIcons() {
       const id = f.replace(ICON_EXT, '');
       if (!id.trim()) continue;
       if (byId.has(id) && !/\.webp$/i.test(f)) continue;
-      byId.set(id, { id, label: `📌 ${id}`, file: f });
+      byId.set(id, { id, label: id, file: f });
     }
     return [...byId.values()];
   } catch (e) {

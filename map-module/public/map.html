@@ -15,7 +15,7 @@
 
   <!-- Map Module Styles -->
   <link rel="icon" href="data:," />
-  <link rel="stylesheet" href="/map-module/src/map-style.css?v=38" />
+  <link rel="stylesheet" href="/map-module/src/map-style.css?v=40" />
   <link rel="stylesheet" href="/map-module/overlay/src/overlay-style.css?v=32" />
   <!-- Leaflet.draw CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
@@ -116,7 +116,7 @@
           <input type="text" id="mhnk-poi-search" placeholder="SEARCH เป้า… เจาะระบบฐานข้อมูล" autocomplete="off" />
         </div>
         <div class="mhnk-filter-wrap">
-          <select id="mhnk-poi-filter" class="mhnk-filter-select"></select>
+          <div id="mhnk-poi-filter" class="mhnk-cat-select-wrap" aria-label="กรองตามหมวดหมู่"></div>
         </div>
         <button class="mhnk-export-btn" onclick="window.location.href='/Challenge'" title="ทายตำแหน่งจากชื่อสถานที่ 50 จุด">
           <span class="mhnk-export-ico">🎮</span>
@@ -172,9 +172,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
 
   <!-- Map Module Scripts -->
-  <script src="/map-module/src/map-categories.js?v=39"></script>
+  <script src="/map-module/src/map-categories.js?v=40"></script>
   <script src="/map-module/src/map-core.js?v=39"></script>
-  <script src="/map-module/src/map-poi.js?v=39"></script>
+  <script src="/map-module/src/map-poi.js?v=41"></script>
   <script src="/map-module/src/map-dc.js?v=39"></script>
 
   <!-- Overlay Module -->
