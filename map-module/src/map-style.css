@@ -2964,9 +2964,13 @@ body {
 .mhnk-cat-menu {
   position: fixed;
   z-index: 13000;
-  max-height: 240px;
-  overflow-y: auto;
-  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  max-height: min(320px, 60vh);
+  padding: 0;
+  overflow: hidden;
+  overscroll-behavior: contain; /* เลื่อนสุดขอบเมนูแล้วไม่ทะลุไปเลื่อนหน้าเว็บ (ซึ่งจะทำให้เมนูปิด) */
+  box-sizing: border-box;
   background: rgba(6, 11, 22, 0.98);
   border: 1px solid rgba(220, 109, 11, 0.35);
   border-radius: 10px;
@@ -2975,6 +2979,68 @@ body {
 }
 
 .mhnk-cat-menu[hidden] { display: none; }
+
+/* ── ช่องค้นหาหมวดหมู่ (หมวดเยอะ — พิมพ์กรองเร็วกว่าไล่เลื่อน) ── */
+.mhnk-cat-menu-head {
+  flex: 0 0 auto;
+  padding: 8px 8px 6px;
+  border-bottom: 1px solid rgba(220, 109, 11, 0.14);
+  background: rgba(3, 7, 15, 0.6);
+  border-radius: 10px 10px 0 0;
+}
+
+.mhnk-cat-menu-search {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 7px 10px;
+  background: rgba(3, 7, 15, 0.85);
+  border: 1px solid rgba(220, 109, 11, 0.22);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  line-height: 1.4;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mhnk-cat-menu-search::placeholder { color: rgba(190, 170, 150, 0.55); }
+
+.mhnk-cat-menu-search:focus {
+  border-color: rgba(220, 109, 11, 0.6);
+  box-shadow: 0 0 0 3px rgba(220, 109, 11, 0.1);
+}
+
+/* ── พื้นที่ลิสต์: เลื่อนขึ้น-ลงได้ + scrollbar สีส้มให้เห็นว่ามีอีกหลายหน้า ── */
+.mhnk-cat-menu-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 5px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(220, 109, 11, 0.45) rgba(220, 109, 11, 0.06);
+}
+
+.mhnk-cat-menu-list::-webkit-scrollbar { width: 8px; }
+.mhnk-cat-menu-list::-webkit-scrollbar-track { background: rgba(220, 109, 11, 0.06); border-radius: 8px; }
+.mhnk-cat-menu-list::-webkit-scrollbar-thumb { background: rgba(220, 109, 11, 0.42); border-radius: 8px; }
+.mhnk-cat-menu-list::-webkit-scrollbar-thumb:hover { background: rgba(220, 109, 11, 0.7); }
+
+/* ตัวเลือกที่ถูกกรองออก (hidden) — ต้องมี เพราะ .mhnk-cat-menu-item ตั้ง display: flex ไว้ */
+.mhnk-cat-menu-item[hidden] { display: none; }
+
+/* ไม่พบหมวดหมู่ที่ค้นหา */
+.mhnk-cat-menu-empty {
+  flex: 0 0 auto;
+  padding: 10px 12px;
+  color: rgba(190, 170, 150, 0.7);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  text-align: center;
+}
+
+.mhnk-cat-menu-empty[hidden] { display: none; }
 
 @keyframes catMenuIn {
   from { opacity: 0; transform: translateY(-4px); }

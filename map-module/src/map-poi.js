@@ -55,12 +55,22 @@ const VESPD_POI = {
     });
 
     document.addEventListener('keydown', (e) => {
-      // ถ้า dropdown หมวดหมู่เปิดอยู่ → Esc ปิด dropdown ก่อน ไม่ปิด modal
-      if (e.key === 'Escape' && this._openMenu) {
+      if (e.key !== 'Escape') return;
+
+      // dropdown หมวดหมู่เปิดอยู่ → Esc = เคลียร์คำค้นก่อน (ถ้ามี) แล้วค่อยปิด ไม่ปิด modal
+      if (this._openMenu) {
+        const search = this._openMenu.querySelector('.mhnk-cat-menu-search');
+        if (search && search.value) {
+          search.value = '';
+          this._filterCatMenu('');
+          search.focus({ preventScroll: true });
+          return;
+        }
         this._closeCatMenu(true);
         return;
       }
-      if (e.key === 'Escape') this._hideModal();
+
+      this._hideModal();
     });
 
     const searchInput = document.getElementById('mhnk-poi-search');
@@ -105,33 +115,48 @@ const VESPD_POI = {
 
     // คีย์บอร์ดใน dropdown: ↑ ↓ เลื่อน, Enter/Space เลือก, Tab ปิด
     document.addEventListener('keydown', (e) => {
-      // ปุ่ม dropdown ที่โฟกัสอยู่ + กด ↑/↓ → เปิดเมนู (เหมือน <select> จริง)
+      // ปุ่ม dropdown ที่โฟกัสอยู่ + กด ↑/↓ → เปิดเมนูแล้วเลื่อนไปตัวถัดไป/ก่อนหน้าเลย
       if (!this._openMenu && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
         const el = document.activeElement;
         if (el && el.classList && el.classList.contains('mhnk-cat-select')) {
           e.preventDefault();
           this._openCatMenu(el);
-          const sel = this._openMenu && this._openMenu.querySelector('.mhnk-cat-menu-item.is-selected');
-          if (sel) sel.focus();
+          this._moveCatFocus(e.key === 'ArrowDown' ? 1 : -1);
         }
         return;
       }
 
       if (!this._openMenu) return;
+
+      const inSearch = !!(e.target && e.target.classList && e.target.classList.contains('mhnk-cat-menu-search'));
+
+      if (inSearch) {
+        // พิมพ์ค้นหาได้ตามปกติ (รวม Space) — ↑↓ กระโดดไปในลิสต์, Enter เลือกตัวที่กรองไว้
+        if (e.key === 'Tab') { this._closeCatMenu(true); return; }
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          this._moveCatFocus(e.key === 'ArrowDown' ? 1 : -1);
+          return;
+        }
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const hits = this._catMenuItems();
+          if (!hits.length) return;
+          const sel = hits.find(it => it.classList.contains('is-selected')) || hits[0];
+          this._pickCatOption(sel);
+        }
+        return;
+      }
+
       if (e.key === 'Tab') { this._closeCatMenu(); return; }
 
-      const items = Array.prototype.slice.call(this._openMenu.querySelectorAll('.mhnk-cat-menu-item'));
+      const items = this._catMenuItems();
       if (items.length === 0) return;
       const cur = items.indexOf(document.activeElement);
 
       if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
         e.preventDefault();
-        let next = cur === -1
-          ? items.findIndex(el => el.classList.contains('is-selected'))
-          : cur + (e.key === 'ArrowDown' ? 1 : -1);
-        if (next < 0) next = 0;
-        if (next > items.length - 1) next = items.length - 1;
-        items[next].focus();
+        this._moveCatFocus(e.key === 'ArrowDown' ? 1 : -1);
         return;
       }
 
@@ -142,9 +167,12 @@ const VESPD_POI = {
     });
 
     // เลื่อนหน้า/ย่อขยายจอ → ปิด dropdown (ตำแหน่ง fixed จะเพี้ยน)
+    // แต่ scroll ที่เกิด "ในเมนูเอง" (ล้อเมาส์/ลากแถบเลื่อนดูทุกหมวด) ต้องไม่ปิดเมนู
     window.addEventListener('resize', () => this._closeCatMenu());
-    document.addEventListener('scroll', () => {
+    document.addEventListener('scroll', (e) => {
       if (Date.now() < this._ignoreScrollUntil) return;
+      const t = e.target;
+      if (t && t.nodeType === 1 && typeof t.closest === 'function' && t.closest('.mhnk-cat-menu')) return;
       this._closeCatMenu();
     }, true);
   },
@@ -326,6 +354,8 @@ const VESPD_POI = {
    */
   _catSelectHtml(inputId, items, selected, ariaLabel) {
     const cur = items.find(it => it.value === selected) || items[0] || { value: '', label: '', iconHtml: '' };
+    // ลิสต์ยาว (เกิน 8 หมวด) → มีช่องค้นหาบนหัวเมนู (หมวดเยอะเลื่อนหาเองยาก)
+    const withSearch = items.length > 8;
 
     const options = items.map(it => {
       const on = it.value === cur.value;
@@ -338,6 +368,14 @@ const VESPD_POI = {
         </div>`;
     }).join('');
 
+    const searchHtml = withSearch
+      ? `
+          <div class="mhnk-cat-menu-head">
+            <input type="text" class="mhnk-cat-menu-search" placeholder="ค้นหาหมวดหมู่..."
+                   autocomplete="off" spellcheck="false" aria-label="ค้นหาหมวดหมู่">
+          </div>`
+      : '';
+
     return `
       <div class="mhnk-cat-select-wrap">
         <input type="hidden" id="${inputId}" value="${escapeHtml(cur.value)}">
@@ -347,7 +385,10 @@ const VESPD_POI = {
           <span class="mhnk-cat-select-label" title="${escapeHtml(cur.label)}">${escapeHtml(cur.label)}</span>
           <span class="mhnk-cat-select-caret" aria-hidden="true">▾</span>
         </button>
-        <div class="mhnk-cat-menu" role="listbox" aria-label="${escapeHtml(ariaLabel || 'หมวดหมู่')}" hidden>${options}</div>
+        <div class="mhnk-cat-menu" hidden>${searchHtml}
+          <div class="mhnk-cat-menu-list" role="listbox" aria-label="${escapeHtml(ariaLabel || 'หมวดหมู่')}">${options}</div>
+          <div class="mhnk-cat-menu-empty" hidden>ไม่พบหมวดหมู่ที่ค้นหา</div>
+        </div>
       </div>`;
   },
 
@@ -367,11 +408,16 @@ const VESPD_POI = {
     if (!menu) return;
     this._closeCatMenu();
 
+    // ล้างคำค้น/ตัวเลือกที่ถูกซ่อนจากการเปิดครั้งก่อน ให้เห็นครบทุกหมวด
+    this._resetCatMenuSearch(menu);
+
     // ย้ายเมนูไปต่อท้าย <body> เพื่อไม่ให้ overflow ของ sidebar/modal ตัดขอบ
     menu._mhnkHome = wrap;
     document.body.appendChild(menu);
     menu.hidden = false;
     menu.style.visibility = 'hidden'; // ซ่อนไว้ก่อน ระหว่างวัดขนาด
+
+    const parts = this._catMenuParts(menu);
 
     const r = trigger.getBoundingClientRect();
     const menuH = menu.offsetHeight;
@@ -391,12 +437,23 @@ const VESPD_POI = {
     this._openSelectBtn = trigger;
     this._ignoreScrollUntil = Date.now() + 250;
 
-    // เลื่อนเมนูไปที่ตัวเลือกปัจจุบัน (แตะ scrollTop เอง ไม่ใช้ scrollIntoView กันหน้าเว็บกระโดด)
-    const sel = menu.querySelector('.mhnk-cat-menu-item.is-selected');
-    if (sel) {
-      const top = sel.offsetTop - menu.clientHeight / 2 + sel.offsetHeight / 2;
-      menu.scrollTop = Math.max(0, top);
+    // ผูกช่องค้นหา (ผูกครั้งเดียวต่อ node — เมนูถูกสร้างใหม่ทุกครั้งที่ re-render)
+    if (parts.search && !parts.search._mhnkBound) {
+      parts.search._mhnkBound = true;
+      parts.search.addEventListener('input', () => this._filterCatMenu(parts.search.value));
     }
+
+    // เลื่อนไปที่ตัวเลือกปัจจุบัน (แตะ scrollTop ของลิสต์เอง ไม่ใช้ scrollIntoView กันหน้าเว็บกระโดด)
+    const list = parts.list;
+    const sel = menu.querySelector('.mhnk-cat-menu-item.is-selected');
+    if (list && sel) {
+      const lr = list.getBoundingClientRect();
+      const sr = sel.getBoundingClientRect();
+      list.scrollTop = Math.max(0, list.scrollTop + (sr.top + sr.height / 2) - (lr.top + lr.height / 2));
+    }
+
+    // มีช่องค้นหา → โฟกัสให้พิมพ์ค้นหาได้ทันที (↑/↓ ใช้ต่อได้เลย)
+    if (parts.search) parts.search.focus({ preventScroll: true });
   },
 
   /** ปิดเมนู + คืนเมนูกลับเข้า wrapper เดิม (เพื่อให้ re-render ล้างทิ้งได้ปกติ) */
@@ -408,12 +465,96 @@ const VESPD_POI = {
     if (btn) btn.setAttribute('aria-expanded', 'false');
     if (menu) {
       menu.classList.remove('is-open');
+      this._resetCatMenuSearch(menu);
       menu.hidden = true;
       menu.removeAttribute('style');
       if (menu._mhnkHome && menu._mhnkHome.isConnected) menu._mhnkHome.appendChild(menu);
       menu._mhnkHome = null;
     }
     if (restoreFocus && btn && btn.isConnected) btn.focus();
+  },
+
+  /** ดึงส่วนประกอบของเมนู (ลิสต์ที่เลื่อนได้ / ช่องค้นหา / ข้อความ "ไม่พบ") */
+  _catMenuParts(menu) {
+    return {
+      list: menu.querySelector('.mhnk-cat-menu-list'),
+      search: menu.querySelector('.mhnk-cat-menu-search'),
+      empty: menu.querySelector('.mhnk-cat-menu-empty')
+    };
+  },
+
+  /** เฉพาะตัวเลือกที่มองเห็นอยู่ (หลังกรองด้วยคำค้น) */
+  _catMenuItems() {
+    if (!this._openMenu) return [];
+    return Array.prototype.slice.call(this._openMenu.querySelectorAll('.mhnk-cat-menu-item:not([hidden])'));
+  },
+
+  /**
+   * เลื่อนโฟกัสไปตัวเลือกถัดไป/ก่อนหน้า (+1/-1)
+   * - ถ้าโฟกัสยังไม่ใช่ตัวเลือก (อยู่ที่ปุ่มหรือช่องค้นหา) → เริ่มจากตัวที่เลือกอยู่ ±1
+   *   (กด ↑/↓ ครั้งแรกจึงขยับทันที ไม่รู้สึกว่า "ลูกศรไม่ทำงาน")
+   * - ใช้ preventScroll + เลื่อน scrollTop ของลิสต์เอง → หน้าเว็บไม่เลื่อน เมนูจึงไม่ถูกปิด
+   */
+  _moveCatFocus(dir) {
+    const items = this._catMenuItems();
+    if (items.length === 0) return;
+
+    const cur = items.indexOf(document.activeElement);
+    let next;
+    if (cur === -1) {
+      const selIdx = items.findIndex(el => el.classList.contains('is-selected'));
+      next = selIdx === -1 ? (dir > 0 ? 0 : items.length - 1) : selIdx + dir;
+    } else {
+      next = cur + dir;
+    }
+    if (next < 0) next = 0;
+    if (next > items.length - 1) next = items.length - 1;
+
+    this._focusCatItem(items[next]);
+  },
+
+  /** โฟกัสตัวเลือก + เลื่อนเฉพาะลิสต์ให้เห็นตัวนั้น (ไม่แตะ scroll ของหน้าเว็บ) */
+  _focusCatItem(item) {
+    if (!item) return;
+    item.focus({ preventScroll: true });
+
+    const list = this._openMenu && this._openMenu.querySelector('.mhnk-cat-menu-list');
+    if (!list) return;
+    const lr = list.getBoundingClientRect();
+    const ir = item.getBoundingClientRect();
+    if (ir.top < lr.top) list.scrollTop -= (lr.top - ir.top) + 6;
+    else if (ir.bottom > lr.bottom) list.scrollTop += (ir.bottom - lr.bottom) + 6;
+  },
+
+  /** ล้างคำค้น + แสดงตัวเลือกทั้งหมด (เรียกตอนเปิด/ปิดเมนู) */
+  _resetCatMenuSearch(menu) {
+    if (!menu) return;
+    const parts = this._catMenuParts(menu);
+    if (parts.search) parts.search.value = '';
+    if (parts.empty) parts.empty.hidden = true;
+    Array.prototype.forEach.call(menu.querySelectorAll('.mhnk-cat-menu-item'), el => { el.hidden = false; });
+    if (parts.list) parts.list.scrollTop = 0;
+  },
+
+  /** กรองตัวเลือกตามคำค้น (ตรงกับชื่อหมวดหรือ id ก็ได้) */
+  _filterCatMenu(query) {
+    const menu = this._openMenu;
+    if (!menu) return;
+    const parts = this._catMenuParts(menu);
+    const q = String(query || '').trim().toLowerCase();
+
+    let shown = 0;
+    Array.prototype.forEach.call(menu.querySelectorAll('.mhnk-cat-menu-item'), el => {
+      const labelEl = el.querySelector('.mhnk-cat-menu-label');
+      const label = (labelEl ? labelEl.textContent : '').toLowerCase();
+      const val = (el.getAttribute('data-value') || '').toLowerCase();
+      const hit = !q || label.indexOf(q) !== -1 || val.indexOf(q) !== -1;
+      el.hidden = !hit;
+      if (hit) shown++;
+    });
+
+    if (parts.empty) parts.empty.hidden = shown !== 0;
+    if (parts.list) parts.list.scrollTop = 0;
   },
 
   /** เลือกตัวเลือก → อัปเดตปุ่ม + hidden input แล้วยิง change ให้โค้ดเดิมทำงานต่อ */
