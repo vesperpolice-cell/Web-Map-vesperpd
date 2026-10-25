@@ -10,8 +10,15 @@
    ตัวนี้เลยเสียบเป็น middleware คั่นหน้า poi-routes แทนการเข้าไปแก้ในโมดูล
 
    ── ที่เก็บ flag ──
-   ชีต "Settings" ช่อง A1 ในสเปรดชีตเดียวกับ MapPOI แต่คนละแท็บ
-   ไม่มีคำสั่งไหนในไฟล์นี้แตะชีต MapPOI เลย (ชีตนั้นเคยข้อมูลหายมาแล้ว)
+   ชีต MapPOI แถว 1 — H1 = "POI_VISIBILITY" (ป้ายบอกว่าช่องนี้คืออะไร)
+   I1 = "VISIBLE" / "HIDDEN" (ค่าจริงที่ใช้ตัดสิน)
+
+   ไฟล์นี้ "ไม่สร้างชีต/แท็บใด ๆ" เด็ดขาด: เขียนเฉพาะ MapPOI!I1 (และเติม H1 ให้ถ้ายังว่าง)
+   ไม่แตะคอลัมน์ A:G ซึ่งเป็นตารางจุดจริง (ชีตนั้นเคยข้อมูลหายมาแล้ว)
+   ชีต MapPOI ต้องมีอยู่ก่อน — ถ้าไม่มี ปุ่มจะได้ 409 พร้อมข้อความ ไม่ใช่สร้างขึ้นมาเอง
+
+   คอลัมน์ H/I ถูกจองให้สวิตช์นี้: repairSheet เขียนใหม่เฉพาะ A:G (+ dcId ที่ J)
+   ส่วน poi-backup อ่าน A:K จึงพาค่า flag ติดไปในไฟล์สำรองด้วย (อ่านอย่างเดียว ไม่กระทบ)
 
    cache ไว้ในหน่วยความจำ 15 วินาที ไม่งั้นทุก request จะยิง Sheets เพิ่มอีกหนึ่งครั้ง
    ซึ่งตอนคนเข้าพร้อมกันเยอะ ๆ จะไปชน quota ของ Sheets
@@ -28,8 +35,12 @@ const pinAuth = require('./pin-auth');
 
 const logger = createLogger('PoiVisibility');
 
-const SHEET_NAME = 'Settings';
-const RANGE = `${SHEET_NAME}!A1`;
+/* ที่เก็บ flag: MapPOI!H1 = ป้าย, MapPOI!I1 = ค่า — ไม่มีแท็บ "Settings" อีกแล้ว */
+const SHEET_NAME = 'MapPOI';
+const LABEL = 'POI_VISIBILITY';
+const LABEL_RANGE = `${SHEET_NAME}!H1`;
+const VALUE_RANGE = `${SHEET_NAME}!I1`;
+const PAIR_RANGE = `${SHEET_NAME}!H1:I1`;
 const HIDDEN = 'HIDDEN';
 const VISIBLE = 'VISIBLE';
 const TTL_MS = 15000;
@@ -42,53 +53,70 @@ function sheetId() {
 }
 
 /**
- * ยังไม่เคยมีการกดปิดสักครั้ง → ชีต Settings ยังไม่ถูกสร้าง
- * Sheets จะตอบ 400 "Unable to parse range" ซึ่งไม่ใช่ความผิดปกติ ต้องนับเป็น "เปิดอยู่"
- * ไม่งั้นแค่ deploy โค้ดนี้ขึ้นไป แผนที่จะดับทั้งเว็บทันทีทั้งที่ยังไม่มีใครสั่งอะไร
+ * ชีต MapPOI ยังไม่มี (สเปรดชีตว่าง/ยังไม่เคยสร้างจุด) → Sheets ตอบ 400 "Unable to parse range"
+ * ไม่ใช่ความผิดปกติ: ตอนอ่านต้องนับเป็น "เปิดอยู่" ไม่งั้นแค่ deploy โค้ดนี้ขึ้นไป
+ * แผนที่จะดับทั้งเว็บทันทีทั้งที่ยังไม่มีใครสั่งอะไร
+ * ตอนเขียน (POST) กรณีนี้จะถูกแปลงเป็น 409 พร้อมบอกแอดมิน ไม่ใช่สร้างชีตขึ้นมาเอง
  */
 function isMissingSheet(err) {
     const status = err && (err.code || (err.response && err.response.status));
     return status === 400 || /unable to parse range/i.test((err && err.message) || '');
 }
 
-/** อ่าน flag จากชีต (ผ่าน cache) — โยน error ออกไปถ้าอ่านไม่ได้จริง ให้ผู้เรียกตัดสินใจ */
+/** แปลงค่าจาก H1:I1 เป็น true (ปิด) / false (เปิด) — พิมพ์ผิดหรือว่าง = เปิด */
+function parseFlag(row) {
+    const label = String((row && row[0]) || '').trim().toUpperCase();
+    const value = String((row && row[1]) || '').trim().toUpperCase();
+    if (value === HIDDEN) return true;
+    if (value === VISIBLE) return false;
+    // เผื่อมีคนสลับไปใส่ค่าในช่อง H (หรือย้ายคอลัมน์) — ยังอ่านได้ ไม่เงียบหาย
+    return label === HIDDEN;
+}
+
+/** อ่าน flag จาก MapPOI!H1:I1 (ผ่าน cache) — โยน error ออกไปถ้าอ่านไม่ได้จริง ให้ผู้เรียกตัดสินใจ */
 async function readHidden(sheets) {
     if (cache.at && Date.now() - cache.at < TTL_MS) return cache.hidden;
 
-    let cell = '';
+    let row = [];
     try {
         const res = await sheets.spreadsheets.values.get({
             spreadsheetId: sheetId(),
-            range: RANGE
+            range: PAIR_RANGE
         });
-        cell = ((res.data.values || [])[0] || [])[0] || '';
+        row = (res.data.values || [])[0] || [];
     } catch (err) {
         if (!isMissingSheet(err)) throw err;
     }
 
-    cache = { hidden: String(cell).trim().toUpperCase() === HIDDEN, at: Date.now() };
+    cache = { hidden: parseFlag(row), at: Date.now() };
     return cache.hidden;
 }
 
-/** เขียน flag ลงชีต — สร้างแท็บ Settings ให้เองถ้ายังไม่มี */
+/**
+ * เขียน flag ลง MapPOI!I1 — ไม่สร้างชีต/แท็บใด ๆ และไม่แตะคอลัมน์ A:G
+ * ถ้า H1 ยังว่าง จะเติมป้าย "POI_VISIBILITY" ให้ในครั้งเดียวกัน (ไม่ทับของเดิม)
+ */
 async function writeHidden(sheets, hidden) {
     const spreadsheetId = sheetId();
+    const value = hidden ? HIDDEN : VISIBLE;
 
-    const meta = await sheets.spreadsheets.get({ spreadsheetId });
-    const exists = meta.data.sheets.some(s => s.properties.title === SHEET_NAME);
-    if (!exists) {
-        await sheets.spreadsheets.batchUpdate({
+    let label = '';
+    try {
+        const cur = await sheets.spreadsheets.values.get({
             spreadsheetId,
-            requestBody: { requests: [{ addSheet: { properties: { title: SHEET_NAME } } }] }
+            range: LABEL_RANGE
         });
-        logger.info(`สร้างชีต "${SHEET_NAME}" ใหม่`);
+        label = ((cur.data.values || [])[0] || [])[0] || '';
+    } catch (err) {
+        if (!isMissingSheet(err)) throw err;
     }
 
+    const hasLabel = !!String(label).trim();
     await sheets.spreadsheets.values.update({
         spreadsheetId,
-        range: RANGE,
+        range: hasLabel ? VALUE_RANGE : PAIR_RANGE,
         valueInputOption: 'RAW',
-        requestBody: { values: [[hidden ? HIDDEN : VISIBLE]] }
+        requestBody: { values: hasLabel ? [[value]] : [[LABEL, value]] }
     });
 
     cache = { hidden, at: Date.now() };
@@ -136,6 +164,14 @@ function createVisibilityRoutes(getSheetsFn) {
             logger.info(hidden ? 'ปิดจุดทั้งแผนที่แล้ว' : 'เปิดจุดทั้งแผนที่แล้ว');
             res.json({ success: true, hidden });
         } catch (err) {
+            if (isMissingSheet(err)) {
+                logger.error(`สลับสถานะไม่สำเร็จ: ไม่พบชีต "${SHEET_NAME}" หรือช่วง H1:I1 (${err.message})`);
+                return res.status(409).json({
+                    success: false,
+                    error: `ยังไม่มีชีต "${SHEET_NAME}" ในสเปรดชีตนี้ — ระบบไม่สร้างชีตให้เอง `
+                        + 'กรุณาเพิ่มจุด POI สักจุดจากหน้าแผนที่ (หรือสร้างชีต MapPOI) แล้วกดสลับอีกครั้ง'
+                });
+            }
             logger.error('สลับสถานะไม่สำเร็จ: ' + err.message);
             res.status(500).json({ success: false, error: 'สลับสถานะไม่สำเร็จ' });
         }

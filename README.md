@@ -94,6 +94,12 @@ node -p "\"GOOGLE_JSON_KEY='\" + JSON.stringify(require('./credentials.json')) +
 
 เก็บใน Google Sheet **เดียวกับเว็บหลัก** (ชีตชื่อ `MapPOI`) → จุดบนสองเว็บ sync กันตลอด
 คอลัมน์ A–G = `id`, `name`, `category`, `description`, `x`, `y`, `createdAt`
+คอลัมน์ J = `dcId` (ถ้ามี)
+
+> **H1 / I1 ถูกจองให้สวิตช์โหมดสอบ** — `H1 = POI_VISIBILITY`, `I1 = VISIBLE` หรือ `HIDDEN`
+> ห้ามใช้คอลัมน์ H–I เก็บข้อมูลจุด (ตารางจริงมีแค่ A–G + `dcId` ที่ J)
+> `POST /api/poi/repair` เขียนใหม่เฉพาะ A–G (+J) และไฟล์สำรองอ่าน A:K แบบอ่านอย่างเดียว
+> → ค่า flag ไม่หายไปไหน
 
 ถ้าต่อ Google Sheets ไม่ได้ ระบบจะ fallback ไปอ่าน [data/poi-cache.json](data/poi-cache.json) อัตโนมัติ
 
@@ -152,7 +158,7 @@ node -p "\"GOOGLE_JSON_KEY='\" + JSON.stringify(require('./credentials.json')) +
 | | |
 |---|---|
 | โค้ด | [server/poi-visibility.js](server/poi-visibility.js) + [public/src/map-visibility.js](public/src/map-visibility.js) |
-| เก็บสถานะ | ชีต `Settings` ช่อง A1 (`VISIBLE` / `HIDDEN`) — คนละแท็บกับ `MapPOI` ไม่แตะกัน |
+| เก็บสถานะ | ชีต `MapPOI` — **H1** = `POI_VISIBILITY` (ป้าย) และ **I1** = `VISIBLE` / `HIDDEN` (ค่า) — ไม่มีแท็บ `Settings` แล้ว |
 | cache | 15 วินาทีในหน่วยความจำ กันไม่ให้ทุก request ยิง Sheets เพิ่ม |
 
 **ข้อควรรู้**
@@ -161,7 +167,10 @@ node -p "\"GOOGLE_JSON_KEY='\" + JSON.stringify(require('./credentials.json')) +
   จึงไม่ต้องแก้อะไรในโมดูลเพิ่มจาก 3 จุดที่มีอยู่
 - **อ่านสถานะไม่ได้ = ถือว่าปิดไว้ก่อน** เพราะ `poi-routes.js` มี fallback ไปอ่าน
   `poi-cache.json` เวลา Sheets ล่ม ถ้าปล่อยให้ fail open ตอนสอบแล้วชีตล่ม ข้อมูลจะหลุดทั้งชุด
-  (ยกเว้นกรณีที่ยังไม่เคยกดสวิตช์เลย — ชีต `Settings` ยังไม่ถูกสร้าง อันนั้นนับเป็น "เปิด")
+  (ยกเว้นกรณีที่ยังไม่เคยตั้งค่าเลย — `I1` ว่าง หรือยังไม่มีชีต `MapPOI` อันนั้นนับเป็น "เปิด")
+- **ระบบไม่สร้างชีต/แท็บใด ๆ** — เขียนเฉพาะ `MapPOI!I1` (และเติม `H1` ให้ถ้ายังว่าง) ไม่แตะ A–G เลย
+  ถ้าชีต `MapPOI` ยังไม่มี ปุ่มตาจะได้ `409` พร้อมข้อความบอก (สร้างชีตได้ด้วยการเพิ่มจุด POI จุดแรก)
+  — ไม่มีแท็บ `Settings` เกิดขึ้นอีก
 - **คนที่เปิดหน้าเว็บค้างไว้ก่อนกดปิด จะยังเห็นจุดบนจอจนกว่าจะรีเฟรช** — ไม่มี auto-refresh
   ให้กดปิดก่อนเริ่มสอบสักพัก และกันคนที่แคปหน้าจอไว้ล่วงหน้าไม่ได้
 
